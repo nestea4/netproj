@@ -1,41 +1,68 @@
+using BookingService.Data;
+using BookingService.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Додавання сервісів до контейнера
+builder.Services.AddControllers();
+
+// Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Cinema Booking Service API",
+        Version = "v1",
+        Description = "API для управління бронюванням квитків у кінотеатрі (Проєкт №1 - SQL + ADO.NET & Dapper)"
+    });
+});
+
+// Реєстрація Database Connection Factory
+var connectionString = builder.Configuration.GetConnectionString("BookingDb") 
+                       ?? throw new InvalidOperationException("Connection string 'BookingDb' not found");
+
+builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
+
+// Реєстрація Repositories
+builder.Services.AddScoped<BookingRepository>();
+
+// CORS (якщо потрібно для frontend)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Налаштування HTTP pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking Service API v1");
+        options.RoutePrefix = string.Empty; // Swagger на root URL
+    });
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthorization();
+app.MapControllers();
 
-var summaries = new[]
+// Welcome endpoint
+app.MapGet("/health", () => Results.Ok(new
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast");
+    Service = "Cinema Booking Service",
+    Status = "Running",
+    Timestamp = DateTime.Now,
+    Version = "1.0.0"
+}));
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

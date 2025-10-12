@@ -4,19 +4,63 @@
     <projectFile profileName="http">BookingService/BookingService.csproj</projectFile>
     <projectFile profileName="https">BookingService/BookingService.csproj</projectFile>
   </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="88d74b31-3f4a-4fe5-8b2f-108183759a65" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CinemaTicketBooking.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Data/DbConnectionFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/Booking.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/BookingDetails.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/BookingStatusHistory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/Customer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/DTOs/BookingDTOs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Models/Ticket.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Scripts/01_CreateDatabase.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Scripts/02_SeedData.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Scripts/03_StoredProcedures.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/BookingService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/BookingService.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "nestea4"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/nestea4/netproj.git",
+    "accountId": "bcdbbe74-2ddc-46b4-9edc-ed9eae0988ce"
+  }
+}]]></component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Data/DbConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/Booking.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/BookingDetails.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/BookingStatusHistory.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/Customer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/DTOs/BookingDTOs.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BookingService/Models/Ticket.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 5
 }]]></component>
@@ -27,8 +71,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    ".NET Launch Settings Profile.BookingService: http.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
@@ -80,16 +126,28 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1760187718938</updated>
-      <workItem from="1760187721638" duration="307000" />
+      <workItem from="1760187721638" duration="7106000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <option name="closed" value="true" />
+      <created>1760188428219</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1760188428219</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
