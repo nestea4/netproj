@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingService", "BookingSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService", "CatalogService\CatalogService.csproj", "{4C1A23FD-08A2-4C9A-AA3F-8B44B7712A14}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReviewService", "ReviewService\ReviewService.csproj", "{CD717FB4-D76E-4ABA-B881-B693A4B55258}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{4C1A23FD-08A2-4C9A-AA3F-8B44B7712A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C1A23FD-08A2-4C9A-AA3F-8B44B7712A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C1A23FD-08A2-4C9A-AA3F-8B44B7712A14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD717FB4-D76E-4ABA-B881-B693A4B55258}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD717FB4-D76E-4ABA-B881-B693A4B55258}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD717FB4-D76E-4ABA-B881-B693A4B55258}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD717FB4-D76E-4ABA-B881-B693A4B55258}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

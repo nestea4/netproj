@@ -5,24 +5,30 @@
     <projectFile profileName="https">BookingService/BookingService.csproj</projectFile>
     <projectFile profileName="http">CatalogService/CatalogService.csproj</projectFile>
     <projectFile profileName="https">CatalogService/CatalogService.csproj</projectFile>
+    <projectFile profileName="http">ReviewService/ReviewService.csproj</projectFile>
+    <projectFile profileName="https">ReviewService/ReviewService.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88d74b31-3f4a-4fe5-8b2f-108183759a65" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbSeeder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/Category.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/Hall.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/Movie.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/MovieCategory.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/MovieDetails.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/Showtime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BookingService/Documentation/ER-diagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Documentation/ER-diagram.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Configuration/MongoDbSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Controllers/DiscussionController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Controllers/ReviewController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Data/MongoDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Data/Repositories/DiscussionRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Data/Repositories/ReviewRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Data/ReviewSeeder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/Comment.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/CommentReply.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/DTOs/ReviewDTOs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/Discussion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/DiscussionPost.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/Review.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Models/UserActivity.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CinemaTicketBooking.sln" beforeDir="false" afterPath="$PROJECT_DIR$/CinemaTicketBooking.sln" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,24 +85,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.BookingService: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.CatalogService: http.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.BookingService: http.executor": "Run",
+    ".NET Launch Settings Profile.CatalogService: http.executor": "Run",
+    ".NET Launch Settings Profile.ReviewService: http.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.CatalogService: http">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.ReviewService: http">
     <configuration name="BookingService: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/BookingService/BookingService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
@@ -161,6 +168,38 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="ReviewService: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ReviewService/ReviewService.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="http" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="AUTO_ATTACH_CHILDREN" value="0" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="ReviewService: https" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ReviewService/ReviewService.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net9.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="https" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="AUTO_ATTACH_CHILDREN" value="0" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -171,6 +210,7 @@
       <updated>1760187718938</updated>
       <workItem from="1760187721638" duration="10686000" />
       <workItem from="1760352377655" duration="2185000" />
+      <workItem from="1760447385104" duration="2457000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
