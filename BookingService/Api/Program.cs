@@ -1,47 +1,86 @@
+using BookingService.Bll.Interfaces;
+using BookingService.Bll.Profiles;
+using BookingService.Bll.Services;
 using BookingService.Dal;
-using BookingService.Data;
-using BookingService.Data.Repositories;
+using BookingService.Dal.Interfaces;
+using BookingService.Dal.Repositories;
+using BookingService.Dal.UnitOfWork;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//додати сервісів до контейнера
+var connectionString = builder.Configuration.GetConnectionString("BookingDb") 
+    ?? throw new InvalidOperationException("Connection string 'BookingDb' not found");
+
+//DbConnectionFactory (один на весь додаток)
+builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
+
+//Repositories (один екземпляр на HTTP запит)
+//1 репозиторій на чистому ADO.NET
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+//2+ репозиторії на ADO.NET + Dapper
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
+//Unit of Work (координує транзакції в межах одного запиту)
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+//Сервіси (Scoped)
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IBookingService, BookingService.Bll.Services.BookingService>();
+
+//AutoMapper (Singleton)
+builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfiles).Assembly);
+
 builder.Services.AddControllers();
 
-//іwagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Cinema Booking Service API",
         Version = "v1",
-        Description = "API для управління бронюванням квитків у кінотеатрі (Проєкт №1 - SQL + ADO.NET & Dapper)"
+        Description = "API для управління бронюванням квитків у кінотеатрі. " +
+                      "Тришарова архітектура: DAL (ADO.NET + Dapper) → BLL → API. " +
+                      "Unit of Work, транзакції, асинхронність, параметризовані запити.",
+        Contact = new OpenApiContact
+        {
+            Name = "Booking Service Team",
+            Email = "support@bookingservice.com"
+        }
     });
+    
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
 });
 
-//реєстрація Database Connection Factory
-var connectionString = builder.Configuration.GetConnectionString("BookingDb") 
-                       ?? throw new InvalidOperationException("Connection string 'BookingDb' not found");
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddDebug();
+});
 
-builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
-
-//реєстрація Repositories
-builder.Services.AddScoped<BookingRepository>();
-
-// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
         policy.AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
 var app = builder.Build();
 
-//налаштування HTTP pipeline
+
+// Swagger (тільки в Development)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -49,6 +88,7 @@ if (app.Environment.IsDevelopment())
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking Service API v1");
         options.RoutePrefix = string.Empty; // Swagger на root URL
+        options.DocumentTitle = "Booking Service API";
     });
 }
 
@@ -61,8 +101,16 @@ app.MapGet("/health", () => Results.Ok(new
 {
     Service = "Cinema Booking Service",
     Status = "Running",
-    Timestamp = DateTime.Now,
-    Version = "1.0.0"
+    Timestamp = DateTime.UtcNow,
+    Version = "1.0.0",
+    Environment = app.Environment.EnvironmentName,
+    Architecture = new
+    {
+        DAL = "ADO.NET + Dapper",
+        BLL = "Services with DTO mapping",
+        API = "ASP.NET Core Controllers",
+        Patterns = new[] { "Repository", "Unit of Work", "Dependency Injection" }
+    }
 }));
 
 app.Run();

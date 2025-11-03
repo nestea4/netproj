@@ -16,65 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88d74b31-3f4a-4fe5-8b2f-108183759a65" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/BookingController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/CustomerController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/DTOs/CustomerDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/DTOs/RequestDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/DTOs/ResponseDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/DTOs/TickketDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/IBookingService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/ICustomerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IBookingRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/ICustomerRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/ITicketRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IUnitOfWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/BookingRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Bookingsservice/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/BookingService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/BookingService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Data/DbConnectionFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/DbConnectionFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/Booking.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Domain/Models/Booking.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/BookingDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Domain/Models/BookingDetails.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/BookingStatusHistory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Domain/Models/BookingStatusHistory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/Customer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Domain/Models/Customer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/DTOs/BookingDTOs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/DTOs/BookingDTOs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Models/Ticket.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Domain/Models/Ticket.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Scripts/01_CreateDatabase.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Scripts/01_CreateDatabase.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Scripts/02_SeedData.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Scripts/02_SeedData.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Scripts/03_StoredProcedures.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Scripts/03_StoredProcedures.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Data/CatalogDbSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbSeeder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/Category.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/Category.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/Hall.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/Hall.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/Movie.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/Movie.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/MovieCategory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/MovieCategory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/MovieDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/MovieDetails.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/Showtime.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/Showtime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Configuration/MongoDbSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Configuration/MongoDbSettings.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Controllers/ReviewController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Controllers/ReviewController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Data/MongoDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Data/MongoDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Data/Repositories/DiscussionRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Data/Repositories/DiscussionRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Data/Repositories/ReviewRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Data/Repositories/ReviewRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Data/ReviewSeeder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Data/ReviewSeeder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Models/Comment.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Models/Comment.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Models/CommentReply.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Models/CommentReply.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Models/DTOs/ReviewDTOs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Models/DTOs/ReviewDTOs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Models/Review.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Models/Review.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReviewService/Models/UserActivity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Models/UserActivity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -308,7 +252,7 @@
       <workItem from="1760352377655" duration="2185000" />
       <workItem from="1760447385104" duration="2457000" />
       <workItem from="1762092450531" duration="11294000" />
-      <workItem from="1762199236310" duration="1648000" />
+      <workItem from="1762199236310" duration="2307000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -326,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760305583438</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added tasks for lab2">
+      <option name="closed" value="true" />
+      <created>1762200934788</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762200934788</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -349,7 +301,8 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="initial commit" />
     <MESSAGE value="added booking service" />
-    <option name="LAST_COMMIT_MESSAGE" value="added booking service" />
+    <MESSAGE value="added tasks for lab2" />
+    <option name="LAST_COMMIT_MESSAGE" value="added tasks for lab2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
