@@ -1,4 +1,4 @@
-namespace BookingService.Models;
+namespace BookingService.Domain.Models;
 
 /// <summary>
 /// Історія змін статусів бронювання (аудит)

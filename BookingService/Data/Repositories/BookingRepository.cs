@@ -1,13 +1,13 @@
 using System.Data;
-using BookingService.Models;
-using BookingService.Models.DTOs;
+using BookingService.Bll.DTOs;
+using BookingService.Dal;
+using BookingService.Domain.Models;
 using Dapper;
 
 namespace BookingService.Data.Repositories;
 
 /// <summary>
 /// Репозиторій для роботи з бронюваннями
-/// Використовує ADO.NET для stored procedures та Dapper для queries
 /// </summary>
 public class BookingRepository
 {
@@ -124,15 +124,15 @@ public class BookingRepository
             commandType: CommandType.StoredProcedure
         );
 
-        // Читаємо перший result set (booking info)
+        //читаю перший result set(booking info)
         var bookingData = await multi.ReadFirstOrDefaultAsync<dynamic>();
         if (bookingData == null)
             return null;
 
-        // Читаємо другий result set (tickets)
+        //читаю другий result set(tickets)
         var tickets = await multi.ReadAsync<dynamic>();
 
-        // Маппінг в DTO
+        //маппінг в DTO
         var response = new BookingDetailsResponse
         {
             BookingId = bookingData.BookingId,
@@ -167,7 +167,7 @@ public class BookingRepository
     }
 
     /// <summary>
-    /// Отримання всіх бронювань клієнта (Dapper query)
+    /// Отримання всіх бронювань клієнта
     /// </summary>
     public async Task<IEnumerable<Booking>> GetCustomerBookingsAsync(long customerId)
     {
@@ -182,7 +182,7 @@ public class BookingRepository
     }
 
     /// <summary>
-    /// Пошук бронювання за номером (Dapper query)
+    /// Пошук бронювання за номером
     /// </summary>
     public async Task<Booking?> GetBookingByNumberAsync(string bookingNumber)
     {
@@ -194,7 +194,7 @@ public class BookingRepository
     }
 
     /// <summary>
-    /// Отримання історії статусів бронювання (Dapper query)
+    /// Отримання історії статусів бронювання
     /// </summary>
     public async Task<IEnumerable<BookingStatusHistory>> GetBookingHistoryAsync(long bookingId)
     {
@@ -209,7 +209,7 @@ public class BookingRepository
     }
 
     /// <summary>
-    /// Статистика бронювань за період (Dapper query)
+    /// Статистика бронювань за період
     /// </summary>
     public async Task<IEnumerable<dynamic>> GetBookingStatisticsAsync(DateTime fromDate, DateTime toDate)
     {

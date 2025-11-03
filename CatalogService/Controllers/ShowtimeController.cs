@@ -92,7 +92,7 @@ public class ShowtimeController : ControllerBase
     {
         try
         {
-            // Перевірка існування фільму та залу
+            //перевірка існування фільму та залу
             var movie = await _context.Movies.FindAsync(request.MovieId);
             var hall = await _context.Halls.FindAsync(request.HallId);
 
@@ -102,7 +102,7 @@ public class ShowtimeController : ControllerBase
             if (hall == null || hall.IsDeleted)
                 return BadRequest(new ErrorResponse { Error = "Hall not found" });
 
-            // Розрахунок EndTime на основі тривалості фільму
+            //розрахунок EndTime на основі тривалості фільму
             var endTime = request.StartTime.AddMinutes(movie.DurationMinutes);
 
             var showtime = new Showtime
@@ -228,7 +228,7 @@ public class ShowtimeController : ControllerBase
     }
 
     /// <summary>
-    /// Видалення сеансу (soft delete)
+    /// Видалення сеансу 
     /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]

@@ -1,6 +1,6 @@
 using MySqlConnector;
 
-namespace BookingService.Data;
+namespace BookingService.Dal;
 
 /// <summary>
 /// Factory для створення MySQL підключень

@@ -12,7 +12,7 @@ public class CatalogDbContext : DbContext
     {
     }
 
-    // DbSets (таблиці)
+    //DbSets (таблиці)
     public DbSet<Movie> Movies { get; set; }
     public DbSet<MovieDetails> MovieDetails { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -24,7 +24,7 @@ public class CatalogDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Movie configuration
+        //Movie configuration
         modelBuilder.Entity<Movie>(entity =>
         {
             entity.ToTable("Movie");
@@ -38,18 +38,17 @@ public class CatalogDbContext : DbContext
             entity.Property(e => e.PosterUrl).HasMaxLength(500);
             entity.Property(e => e.TrailerUrl).HasMaxLength(500);
             
-            // Простіше: без DEFAULT в БД, використовуємо SaveChanges override
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
             entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             
-            // Індекси
+            //Індекси
             entity.HasIndex(e => e.Title);
             entity.HasIndex(e => e.ReleaseDate);
             entity.HasIndex(e => e.IsDeleted);
         });
 
-        // MovieDetails configuration (1:1 з Movie)
+        //MovieDetails configuration (1:1 з Movie)
         modelBuilder.Entity<MovieDetails>(entity =>
         {
             entity.ToTable("MovieDetails");
@@ -63,20 +62,19 @@ public class CatalogDbContext : DbContext
             entity.Property(e => e.AgeRating).HasMaxLength(20);
             entity.Property(e => e.Awards).HasMaxLength(500);
             
-            // Виправлення datetime
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             
-            // 1:1 relationship
+            //1:1
             entity.HasOne(d => d.Movie)
                   .WithOne(m => m.Details)
                   .HasForeignKey<MovieDetails>(d => d.MovieId)
                   .OnDelete(DeleteBehavior.Cascade);
             
-            // Унікальний індекс для 1:1
+            //Унікальний індекс для 1:1
             entity.HasIndex(e => e.MovieId).IsUnique();
         });
 
-        // Category configuration
+        //Category configuration
         modelBuilder.Entity<Category>(entity =>
         {
             entity.ToTable("Category");
@@ -87,23 +85,22 @@ public class CatalogDbContext : DbContext
             entity.Property(e => e.Slug).IsRequired().HasMaxLength(100);
             entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             
-            // Виправлення datetime
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             
-            // Унікальність назви та slug
+            //Унікальність назви та slug
             entity.HasIndex(e => e.Name).IsUnique();
             entity.HasIndex(e => e.Slug).IsUnique();
         });
 
-        // MovieCategory configuration (M:N)
+        //MovieCategory configuration (M:N)
         modelBuilder.Entity<MovieCategory>(entity =>
         {
             entity.ToTable("MovieCategory");
             
-            // Композитний первинний ключ
+            //Композитний первинний ключ
             entity.HasKey(mc => new { mc.MovieId, mc.CategoryId });
             
-            // Зв'язки
+            //Зв'язки
             entity.HasOne(mc => mc.Movie)
                   .WithMany(m => m.MovieCategories)
                   .HasForeignKey(mc => mc.MovieId)
@@ -114,12 +111,12 @@ public class CatalogDbContext : DbContext
                   .HasForeignKey(mc => mc.CategoryId)
                   .OnDelete(DeleteBehavior.Cascade);
             
-            // Індекси
+            //Індекси
             entity.HasIndex(mc => mc.MovieId);
             entity.HasIndex(mc => mc.CategoryId);
         });
 
-        // Hall configuration
+        //Hall configuration
         modelBuilder.Entity<Hall>(entity =>
         {
             entity.ToTable("Hall");
@@ -129,18 +126,17 @@ public class CatalogDbContext : DbContext
             entity.Property(e => e.HallType).HasMaxLength(50);
             entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             
-            // Виправлення datetime
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
             
-            // Обмеження
+            //Обмеження
             entity.HasCheckConstraint("CK_Hall_Capacity", "Capacity > 0");
             entity.HasCheckConstraint("CK_Hall_RowCount", "RowCount > 0");
             
             entity.HasIndex(e => e.Name).IsUnique();
         });
 
-        // Showtime configuration
+        //Showtime configuration
         modelBuilder.Entity<Showtime>(entity =>
         {
             entity.ToTable("Showtime");
@@ -150,13 +146,12 @@ public class CatalogDbContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(true);
             entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             
-            // Виправлення datetime
             entity.Property(e => e.StartTime).HasColumnType("datetime");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
             entity.Property(e => e.UpdatedAt).HasColumnType("datetime");
             
-            // Зв'язки (1:N)
+            //Зв'язки (1:N)
             entity.HasOne(s => s.Movie)
                   .WithMany(m => m.Showtimes)
                   .HasForeignKey(s => s.MovieId)
@@ -167,11 +162,11 @@ public class CatalogDbContext : DbContext
                   .HasForeignKey(s => s.HallId)
                   .OnDelete(DeleteBehavior.Restrict);
             
-            // Обмеження
+            //Обмеження
             entity.HasCheckConstraint("CK_Showtime_Price", "BasePrice >= 0");
             entity.HasCheckConstraint("CK_Showtime_Seats", "AvailableSeats >= 0");
             
-            // Індекси
+            //Індекси
             entity.HasIndex(e => e.MovieId);
             entity.HasIndex(e => e.HallId);
             entity.HasIndex(e => e.StartTime);
@@ -179,7 +174,7 @@ public class CatalogDbContext : DbContext
         });
     }
 
-    // Override SaveChanges для автоматичного оновлення аудитних полів
+    //Override SaveChanges для автоматичного оновлення аудитних полів
     public override int SaveChanges()
     {
         UpdateAuditFields();

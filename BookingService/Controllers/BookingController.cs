@@ -1,5 +1,5 @@
+using BookingService.Bll.DTOs;
 using BookingService.Data.Repositories;
-using BookingService.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 

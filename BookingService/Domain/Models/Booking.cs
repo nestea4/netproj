@@ -1,4 +1,6 @@
-namespace BookingService.Models;
+using BookingService.Domain.Models;
+
+namespace BookingService.Domain.Models;
 
 /// <summary>
 /// Бронювання квитків
@@ -11,22 +13,22 @@ public class Booking
     public string BookingNumber { get; set; } = string.Empty;
     public DateTime BookingDate { get; set; }
     public decimal TotalAmount { get; set; }
-    public string Status { get; set; } = "Pending"; // Pending, Confirmed, Paid, Cancelled
+    public string Status { get; set; } = "Pending"; //Pending,Confirmed,Paid,Cancelled
     public string? PaymentMethod { get; set; }
     
-    // Аудитні поля
+    //Аудитні поля
     public DateTime CreatedAt { get; set; }
     public string CreatedBy { get; set; } = "System";
     public DateTime UpdatedAt { get; set; }
     public string UpdatedBy { get; set; } = "System";
     public bool IsDeleted { get; set; }
     
-    // Navigation properties (для повернення з БД)
+    //Navigation properties
     public Customer? Customer { get; set; }
     public BookingDetails? Details { get; set; }
     public List<Ticket> Tickets { get; set; } = new();
     
-    // Computed properties
+    //Computed properties
     public decimal FinalAmount => TotalAmount - (Details?.DiscountAmount ?? 0);
     public int TicketCount => Tickets.Count;
 }

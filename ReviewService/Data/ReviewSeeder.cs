@@ -10,14 +10,14 @@ public static class ReviewSeeder
 {
     public static async Task SeedAsync(MongoDbContext context)
     {
-        // Перевірка чи вже є дані
+        //перевірка чи вже є дані
         var existingReviews = await context.Reviews.CountDocumentsAsync(FilterDefinition<Review>.Empty);
         if (existingReviews > 0)
         {
-            return; // Дані вже є
+            return; //вже є
         }
 
-        // Відгуки
+        //відгуки
         var reviews = new List<Review>
         {
             new()
@@ -165,7 +165,7 @@ public static class ReviewSeeder
 
         await context.Reviews.InsertManyAsync(reviews);
 
-        // Обговорення
+        //обговорення
         var discussions = new List<Discussion>
         {
             new()

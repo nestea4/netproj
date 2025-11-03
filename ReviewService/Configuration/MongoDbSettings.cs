@@ -1,7 +1,7 @@
 namespace ReviewService.Configuration;
 
 /// <summary>
-/// Налаштування підключення до MongoDB
+/// налаштування підключення до MongoDB
 /// </summary>
 public class MongoDbSettings
 {

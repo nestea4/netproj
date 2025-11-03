@@ -1,12 +1,13 @@
+using BookingService.Dal;
 using BookingService.Data;
 using BookingService.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Додавання сервісів до контейнера
+//додати сервісів до контейнера
 builder.Services.AddControllers();
 
-// Swagger/OpenAPI
+//іwagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -18,16 +19,16 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Реєстрація Database Connection Factory
+//реєстрація Database Connection Factory
 var connectionString = builder.Configuration.GetConnectionString("BookingDb") 
                        ?? throw new InvalidOperationException("Connection string 'BookingDb' not found");
 
 builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
 
-// Реєстрація Repositories
+//реєстрація Repositories
 builder.Services.AddScoped<BookingRepository>();
 
-// CORS (якщо потрібно для frontend)
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -40,7 +41,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Налаштування HTTP pipeline
+//налаштування HTTP pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -56,7 +57,6 @@ app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
 
-// Welcome endpoint
 app.MapGet("/health", () => Results.Ok(new
 {
     Service = "Cinema Booking Service",

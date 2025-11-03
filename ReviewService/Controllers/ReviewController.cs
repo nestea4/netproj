@@ -82,7 +82,7 @@ public class ReviewController : ControllerBase
         if (review == null)
             return NotFound(new ErrorResponse { Error = "Review not found" });
 
-        // Збільшити лічильник переглядів
+        //збільшити лічильник переглядів
         await _reviewRepository.IncrementViewCountAsync(id);
 
         return Ok(review);

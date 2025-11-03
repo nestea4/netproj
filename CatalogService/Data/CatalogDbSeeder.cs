@@ -10,13 +10,13 @@ public static class CatalogDbSeeder
 {
     public static async Task SeedAsync(CatalogDbContext context)
     {
-        // Перевірка чи вже є дані
+        //чи вже є дані
         if (await context.Movies.AnyAsync())
         {
-            return; // Дані вже є
+            return; //вже є
         }
 
-        // 1. Categories
+        // 1.Categories
         var categories = new List<Category>
         {
             new() { Name = "Action", Description = "Action movies", Slug = "action", CreatedAt = DateTime.Now },
@@ -29,7 +29,7 @@ public static class CatalogDbSeeder
         context.Categories.AddRange(categories);
         await context.SaveChangesAsync();
 
-        // 2. Halls
+        // 2.Halls
         var halls = new List<Hall>
         {
             new() 
@@ -76,7 +76,7 @@ public static class CatalogDbSeeder
         context.Halls.AddRange(halls);
         await context.SaveChangesAsync();
 
-        // 3. Movies
+        // 3.Movies
         var movie1 = new Movie
         {
             Title = "Dune: Part Two",
@@ -140,7 +140,7 @@ public static class CatalogDbSeeder
         context.Movies.AddRange(movie1, movie2, movie3, movie4);
         await context.SaveChangesAsync();
 
-        // 4. Movie Details (1:1)
+        // 4.Movie Details (1:1)
         var details = new List<MovieDetails>
         {
             new() 
@@ -195,7 +195,7 @@ public static class CatalogDbSeeder
         context.MovieDetails.AddRange(details);
         await context.SaveChangesAsync();
 
-        // 5. Movie-Category relationships (M:N)
+        // 5.Movie-Category relationships (M:N)
         var movieCategories = new List<MovieCategory>
         {
             new() { MovieId = movie1.MovieId, CategoryId = categories[0].CategoryId }, // Dune - Action
@@ -209,11 +209,11 @@ public static class CatalogDbSeeder
         context.MovieCategories.AddRange(movieCategories);
         await context.SaveChangesAsync();
 
-        // 6. Showtimes
-        var baseDate = DateTime.Now.Date.AddDays(3); // Сеанси через 3 дні
+        // 6.Showtimes
+        var baseDate = DateTime.Now.Date.AddDays(3); //Сеанси через 3 дні
         var showtimes = new List<Showtime>
         {
-            // Dune - Hall 1
+            //Dune - Hall 1
             new() 
             { 
                 MovieId = movie1.MovieId, 
@@ -237,7 +237,7 @@ public static class CatalogDbSeeder
                 CreatedAt = DateTime.Now
             },
             
-            // Oppenheimer - Hall 2 (IMAX)
+            //Oppenheimer - Hall 2(IMAX)
             new() 
             { 
                 MovieId = movie2.MovieId, 
@@ -261,7 +261,7 @@ public static class CatalogDbSeeder
                 CreatedAt = DateTime.Now
             },
             
-            // Poor Things - Hall 3
+            //Poor Things - Hall 3
             new() 
             { 
                 MovieId = movie3.MovieId, 
@@ -274,7 +274,7 @@ public static class CatalogDbSeeder
                 CreatedAt = DateTime.Now
             },
             
-            // Barbie - Hall 4 (VIP)
+            //Barbie - Hall 4 (VIP)
             new() 
             { 
                 MovieId = movie4.MovieId, 

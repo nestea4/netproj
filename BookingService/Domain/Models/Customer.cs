@@ -1,4 +1,4 @@
-namespace BookingService.Models;
+namespace BookingService.Domain.Models;
 
 /// <summary>
 /// Клієнт кінотеатру
@@ -12,13 +12,13 @@ public class Customer
     public string Email { get; set; } = string.Empty;
     public string? Phone { get; set; }
     
-    // Аудитні поля
+    //Аудитні поля
     public DateTime CreatedAt { get; set; }
     public string CreatedBy { get; set; } = "System";
     public DateTime UpdatedAt { get; set; }
     public string UpdatedBy { get; set; } = "System";
     public bool IsDeleted { get; set; }
     
-    // Computed property
+    //Computed property
     public string FullName => $"{FirstName} {LastName}";
 }

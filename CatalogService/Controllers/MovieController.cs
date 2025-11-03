@@ -125,7 +125,7 @@ public class MovieController : ControllerBase
             _context.Movies.Add(movie);
             await _context.SaveChangesAsync();
 
-            // Додавання категорій (M:N)
+            //Додавання категорій (M:N)
             if (request.CategoryIds.Any())
             {
                 foreach (var categoryId in request.CategoryIds)
@@ -194,7 +194,7 @@ public class MovieController : ControllerBase
     }
 
     /// <summary>
-    /// Видалення фільму (soft delete)
+    /// Видалення фільму
     /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]

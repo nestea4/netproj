@@ -4,7 +4,7 @@ using System.Text.Encodings.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Додавання сервісів
+//додавання сервісів
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -23,14 +23,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Реєстрація DbContext з MySQL (Pomelo)
+//реєстрація DbContext з MySQL
 var connectionString = builder.Configuration.GetConnectionString("CatalogDb") 
     ?? throw new InvalidOperationException("Connection string 'CatalogDb' not found");
 
 builder.Services.AddDbContext<CatalogDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-// CORS
+//CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -43,17 +43,17 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Seed database (при старті додатку)
+//Seed database(при старті)
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
     
     try
     {
-        // Застосувати міграції автоматично
+        //застосувати міграції автоматично
         await context.Database.MigrateAsync();
         
-        // Seed даних
+        //іeed даних
         await CatalogDbSeeder.SeedAsync(context);
     }
     catch (Exception ex)
@@ -63,14 +63,14 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Налаштування HTTP pipeline
+//налаштування HTTP pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog Service API v1");
-        options.RoutePrefix = string.Empty; // Swagger на root URL
+        options.RoutePrefix = string.Empty; //swagger на root URL
     });
 }
 
@@ -79,7 +79,7 @@ app.UseCors("AllowAll");
 app.UseAuthorization();
 app.MapControllers();
 
-// Health check endpoint
+//health check endpoint
 app.MapGet("/health", () => Results.Ok(new
 {
     Service = "Cinema Catalog Service",
