@@ -8,9 +8,9 @@ using BookingService.Domain.Models;
 namespace BookingService.Bll.Services;
 
 /// <summary>
-/// Сервіс для роботи з клієнтами
-/// Реалізує бізнес-логіку та валідацію
-/// BLL - єдиний власник бізнес-логіки, контролери - thin adapters
+///сервіс для роботи з клієнтами
+///реалізує бізнес-логіку та валідацію
+///BLL - єдиний власник бізнес-логіки, контролери thin
 /// </summary>
 public class CustomerService : ICustomerService
 {
@@ -29,7 +29,7 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Отримання клієнта за ID
+    ///отримання клієнта за ID
     /// </summary>
     public async Task<CustomerDto?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
     {
@@ -41,7 +41,7 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Отримання всіх клієнтів
+    ///отримання всіх клієнтів
     /// </summary>
     public async Task<IEnumerable<CustomerDto>> GetAllAsync(CancellationToken cancellationToken = default)
     {
@@ -54,7 +54,7 @@ public class CustomerService : ICustomerService
 
     /// <summary>
     /// Створення нового клієнта
-    /// Бізнес-правила:
+    /// правила:
     /// - Email повинен бути унікальним
     /// - Всі обов'язкові поля повинні бути заповнені
     /// - Email повинен мати валідний формат
@@ -63,23 +63,23 @@ public class CustomerService : ICustomerService
     {
         _logger.LogInformation("Creating customer with email: {Email}", request.Email);
 
-        // Валідація вхідних даних
+        //валідація вхідних даних
         ValidateCustomerRequest(request);
 
-        // Бізнес-правило: перевірка унікальності email
+        //правило: перевірка унікальності email
         var existingCustomer = await _unitOfWork.Customers.GetByEmailAsync(request.Email, cancellationToken);
         if (existingCustomer != null)
         {
             throw new InvalidOperationException($"Customer with email {request.Email} already exists");
         }
 
-        // Маппінг DTO -> Domain model
+        //маппінг DTO в Domain model
         var customer = _mapper.Map<Customer>(request);
         
-        // Створення в базі даних
+        //створення в базі даних
         var customerId = await _unitOfWork.Customers.CreateAsync(customer, cancellationToken);
 
-        // Отримання створеного клієнта
+        //отримання створеного клієнта
         var createdCustomer = await _unitOfWork.Customers.GetByIdAsync(customerId, cancellationToken);
         
         _logger.LogInformation("Customer created successfully with ID: {CustomerId}", customerId);
@@ -89,7 +89,7 @@ public class CustomerService : ICustomerService
 
     /// <summary>
     /// Оновлення даних клієнта
-    /// Бізнес-правила:
+    ///правила:
     /// - Клієнт повинен існувати
     /// - Новий email повинен бути унікальним (якщо змінився)
     /// - Всі обов'язкові поля повинні бути заповнені
@@ -98,7 +98,7 @@ public class CustomerService : ICustomerService
     {
         _logger.LogInformation("Updating customer with ID: {CustomerId}", id);
 
-        // Валідація вхідних даних
+        //валідація вхідних даних
         ValidateCustomerRequest(request);
 
         // Перевірка існування клієнта
@@ -108,7 +108,7 @@ public class CustomerService : ICustomerService
             throw new InvalidOperationException($"Customer with ID {id} not found");
         }
 
-        // Бізнес-правило: перевірка унікальності email (якщо змінився)
+        // правило: перевірка унікальності email (якщо змінився)
         if (existingCustomer.Email != request.Email)
         {
             var customerWithEmail = await _unitOfWork.Customers.GetByEmailAsync(request.Email, cancellationToken);
@@ -118,7 +118,7 @@ public class CustomerService : ICustomerService
             }
         }
 
-        // Оновлення полів
+        //оновлення полів
         existingCustomer.FirstName = request.FirstName;
         existingCustomer.LastName = request.LastName;
         existingCustomer.Email = request.Email;
@@ -126,7 +126,7 @@ public class CustomerService : ICustomerService
         existingCustomer.UpdatedAt = DateTime.Now;
         existingCustomer.UpdatedBy = "API";
 
-        // Збереження змін
+        //збереження змін
         var updated = await _unitOfWork.Customers.UpdateAsync(existingCustomer, cancellationToken);
         
         if (!updated)
@@ -134,7 +134,7 @@ public class CustomerService : ICustomerService
             throw new InvalidOperationException($"Failed to update customer with ID {id}");
         }
 
-        // Отримання оновленого клієнта
+        //отримання оновленого клієнта
         var updatedCustomer = await _unitOfWork.Customers.GetByIdAsync(id, cancellationToken);
         
         _logger.LogInformation("Customer updated successfully: {CustomerId}", id);
@@ -144,20 +144,20 @@ public class CustomerService : ICustomerService
 
     /// <summary>
     /// Видалення клієнта (soft delete)
-    /// Бізнес-правило: не можна видалити клієнта з активними бронюваннями
+    /// правило: не можна видалити клієнта з активними бронюваннями
     /// </summary>
     public async Task<bool> DeleteAsync(long id, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Deleting customer with ID: {CustomerId}", id);
 
-        // Перевірка існування
+        //перевірка існування
         var customer = await _unitOfWork.Customers.GetByIdAsync(id, cancellationToken);
         if (customer == null)
         {
             throw new InvalidOperationException($"Customer with ID {id} not found");
         }
 
-        // Бізнес-правило: перевірка наявності активних бронювань
+        //правило: перевірка наявності активних бронювань
         var bookings = await _unitOfWork.Bookings.GetCustomerBookingsAsync(id, cancellationToken);
         var activeBookings = bookings.Where(b => b.Status == "Pending" || b.Status == "Confirmed").ToList();
         
@@ -166,8 +166,7 @@ public class CustomerService : ICustomerService
             throw new InvalidOperationException(
                 $"Cannot delete customer with ID {id}. Customer has {activeBookings.Count} active booking(s)");
         }
-
-        // Soft delete
+        
         var deleted = await _unitOfWork.Customers.SoftDeleteAsync(id, cancellationToken);
         
         _logger.LogInformation("Customer deleted successfully: {CustomerId}", id);
@@ -176,7 +175,7 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Пошук клієнта за email
+    /// пошук клієнта за email
     /// </summary>
     public async Task<CustomerDto?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {
@@ -193,7 +192,7 @@ public class CustomerService : ICustomerService
     }
 
     /// <summary>
-    /// Пошук клієнтів за ім'ям або прізвищем
+    /// пошук клієнтів за ім'ям або прізвищем
     /// </summary>
     public async Task<IEnumerable<CustomerDto>> SearchByNameAsync(string searchTerm, CancellationToken cancellationToken = default)
     {
@@ -211,7 +210,7 @@ public class CustomerService : ICustomerService
 
     /// <summary>
     /// Перевірка унікальності email
-    /// Використовується для валідації форм на клієнті
+    /// для валідації форм на клієнті
     /// </summary>
     public async Task<bool> IsEmailUniqueAsync(string email, long? excludeCustomerId = null, CancellationToken cancellationToken = default)
     {
@@ -227,7 +226,7 @@ public class CustomerService : ICustomerService
             return true;
         }
 
-        // Якщо вказано excludeCustomerId, перевіряємо чи це той самий клієнт
+        //якщо вказано excludeCustomerId, перевіряємо чи це той самий клієнт
         return excludeCustomerId.HasValue && customer.CustomerId == excludeCustomerId.Value;
     }
 

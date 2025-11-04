@@ -6,8 +6,8 @@ using MySqlConnector;
 namespace BookingService.Dal.Repositories;
 
 /// <summary>
-/// Репозиторій для Customer на ЧИСТОМУ ADO.NET
-/// Демонструє роботу з підключеннями, командами, параметрами та DataReader
+/// Репозиторій для Customer на чистому ADO.NET
+///тута є робота з підключеннями, командами, параметрами та DataReader
 /// </summary>
 public class CustomerRepository : ICustomerRepository
 {
@@ -21,7 +21,7 @@ public class CustomerRepository : ICustomerRepository
     }
 
     /// <summary>
-    /// Встановлює спільне підключення для UoW
+    /// встановлює спільне підключення для UoW
     /// </summary>
     public void SetSharedConnection(MySqlConnection connection, MySqlTransaction? transaction = null)
     {

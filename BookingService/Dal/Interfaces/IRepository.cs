@@ -1,7 +1,7 @@
 namespace BookingService.Dal.Interfaces;
 
 /// <summary>
-///Generic repository interface для базових CRUD операцій
+///generic repository interface для базових CRUD операцій
 /// </summary>
 /// <typeparam name="T">Тип сутності</typeparam>
 public interface IRepository<T> where T : class

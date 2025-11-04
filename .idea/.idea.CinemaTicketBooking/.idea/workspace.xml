@@ -16,9 +16,70 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88d74b31-3f4a-4fe5-8b2f-108183759a65" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/CatalogService/Controllers/CategoriesController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/CategoryConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/HallConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieCategoryConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieDetailsConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/ShowtimeConfiguration.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/BusinessException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/ConflictException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/NotFoundException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Mappings/MappingProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Middleware/ExceptionHandlingMiddleware.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Middleware/RequestLoggingMiddleware.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Models/DTOs/AllDTOs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/CategoryRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/GenericRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/ICategoryRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IGenericRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IMovieRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IShowtimeRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/MovieRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/ShowtimeRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Services/Interfaces/IMovieService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Services/Interfaces/IShowtimeService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Services/MovieService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Services/ShowtimeService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/BaseSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ISpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieFilterSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieWithDetailsSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/PopularMoviesSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeCountSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeFilterSpecification.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/SpecificationEvaluator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/UnitOfWork/IUnitOfWork.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/UnitOfWork/UnitOfWork.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateMovieDetailsDtoValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateMovieDtoValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateShowtimeDtoValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/MovieFilterValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/UpdateMovieDtoValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Api/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/BookingController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Api/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/CustomerController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BookingService/Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Interfaces/IBookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/IBookingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Interfaces/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/ICustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IUnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/BookingRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/BookingRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CatalogService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +122,6 @@
     <setting file="file://$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BookingService/Controllers/BookingController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/DbConnectionFactory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/Interfaces/IBookingRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/Interfaces/ICustomerRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -72,23 +132,63 @@
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BookingService/Data/Repositories/BookingRepository.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Domain/Models/Booking.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Domain/Models/BookingDetails.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Domain/Models/BookingStatusHistory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Domain/Models/Customer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BookingService/Domain/Models/Ticket.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Controllers/CategoriesController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Data/CatalogDbSeeder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/CategoryConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/HallConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/MovieCategoryConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/MovieConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/MovieDetailsConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Data/Configurations/ShowtimeConfiguration.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Exceptions/BusinessException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Exceptions/ConflictException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Exceptions/NotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Mappings/MappingProfile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Middleware/ExceptionHandlingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Middleware/RequestLoggingMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/Category.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Models/DTOs/AllDTOs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/Hall.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/Movie.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/MovieCategory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/MovieDetails.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Models/Showtime.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/CategoryRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/GenericRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/Interfaces/ICategoryRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IGenericRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IMovieRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IShowtimeRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/MovieRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Repositories/ShowtimeRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Services/Interfaces/IMovieService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Services/Interfaces/IShowtimeService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Services/MovieService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Services/ShowtimeService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/BaseSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/ISpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieFilterSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieWithDetailsSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/PopularMoviesSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeCountSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeFilterSpecification.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Specifications/SpecificationEvaluator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/UnitOfWork/IUnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/UnitOfWork/UnitOfWork.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Validators/CreateMovieDetailsDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Validators/CreateMovieDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Validators/CreateShowtimeDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Validators/MovieFilterValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/CatalogService/Validators/UpdateMovieDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -120,7 +220,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.ReviewService: http">
+  <component name="RunManager" selected=".NET Launch Settings Profile.CatalogService: http">
     <configuration name="Bookingsservice" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -252,7 +352,8 @@
       <workItem from="1760352377655" duration="2185000" />
       <workItem from="1760447385104" duration="2457000" />
       <workItem from="1762092450531" duration="11294000" />
-      <workItem from="1762199236310" duration="2307000" />
+      <workItem from="1762199236310" duration="10082000" />
+      <workItem from="1762240762851" duration="11678000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -278,7 +379,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762200934788</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="modified files">
+      <option name="closed" value="true" />
+      <created>1762201645174</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762201645174</updated>
+    </task>
+    <task id="LOCAL-00005" summary="deleted file">
+      <option name="closed" value="true" />
+      <created>1762201892621</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762201892622</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -302,7 +419,9 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="added booking service" />
     <MESSAGE value="added tasks for lab2" />
-    <option name="LAST_COMMIT_MESSAGE" value="added tasks for lab2" />
+    <MESSAGE value="modified files" />
+    <MESSAGE value="deleted file" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted file" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

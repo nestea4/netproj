@@ -9,7 +9,6 @@ namespace BookingService.Api.Controllers;
 
 /// <summary>
 /// API для управління бронюваннями квитків
-/// Thin controller - вся бізнес-логіка в BLL
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -27,7 +26,7 @@ public class BookingController : ControllerBase
 
     /// <summary>
     /// Створення нового бронювання з квитками (транзакційна операція)
-    /// Демонстрація Unit of Work через BLL сервіс
+    /// Unit of Work через BLL сервіс
     /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(CreateBookingResponse), StatusCodes.Status201Created)]
@@ -89,7 +88,6 @@ public class BookingController : ControllerBase
 
     /// <summary>
     /// Підтвердження та оплата бронювання (транзакційна операція)
-    /// Демонстрація складної бізнес-логіки в транзакції через BLL
     /// </summary>
     [HttpPost("{id:long}/confirm-and-pay")]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]

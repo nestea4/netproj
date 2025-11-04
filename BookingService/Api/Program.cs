@@ -12,10 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BookingDb") 
     ?? throw new InvalidOperationException("Connection string 'BookingDb' not found");
 
-//DbConnectionFactory (один на весь додаток)
+//DbConnectionFactory
 builder.Services.AddSingleton(new DbConnectionFactory(connectionString));
 
-//Repositories (один екземпляр на HTTP запит)
+//Repositories
 //1 репозиторій на чистому ADO.NET
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
@@ -30,7 +30,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBookingService, BookingService.Bll.Services.BookingService>();
 
-//AutoMapper (Singleton)
+//AutoMapper
 builder.Services.AddAutoMapper(cfg => { }, typeof(MappingProfiles).Assembly);
 
 builder.Services.AddControllers();
@@ -80,14 +80,13 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 
-// Swagger (тільки в Development)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Booking Service API v1");
-        options.RoutePrefix = string.Empty; // Swagger на root URL
+        options.RoutePrefix = string.Empty; //Swagger на root URL
         options.DocumentTitle = "Booking Service API";
     });
 }

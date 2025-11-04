@@ -9,7 +9,6 @@ namespace BookingService.Dal.Repositories;
 
 // <summary>
 /// Репозиторій для роботи з бронюваннями (ADO.NET + Dapper)
-/// Комбінує Dapper для читань та ADO.NET для складних операцій
 /// </summary>
 public class BookingRepository : IBookingRepository
 {

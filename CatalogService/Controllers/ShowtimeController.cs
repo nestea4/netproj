@@ -1,6 +1,7 @@
 using CatalogService.Data;
 using CatalogService.Models;
 using CatalogService.Models.DTOs;
+using CatalogService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,245 +13,132 @@ namespace CatalogService.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class ShowtimeController : ControllerBase
+public class ShowtimesController : ControllerBase
 {
-    private readonly CatalogDbContext _context;
-    private readonly ILogger<ShowtimeController> _logger;
+    private readonly IShowtimeService _showtimeService;
+    private readonly ILogger<ShowtimesController> _logger;
 
-    public ShowtimeController(CatalogDbContext context, ILogger<ShowtimeController> logger)
+    public ShowtimesController(IShowtimeService showtimeService, ILogger<ShowtimesController> logger)
     {
-        _context = context;
+        _showtimeService = showtimeService;
         _logger = logger;
     }
 
     /// <summary>
-    /// Отримання всіх сеансів
+    /// Отримання списку сеансів з фільтрацією та пагінацією
     /// </summary>
+    /// <param name="movieId">ID фільму (опціонально)</param>
+    /// <param name="date">Дата сеансу (опціонально)</param>
+    /// <param name="pageNumber">Номер сторінки</param>
+    /// <param name="pageSize">Розмір сторінки</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Посторінковий список сеансів</returns>
+    /// <response code="200">Успішне отримання списку сеансів</response>
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<ShowtimeResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllShowtimes()
+    [ProducesResponseType(typeof(PagedResult<ShowtimeDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetShowtimes(
+        [FromQuery] long? movieId,
+        [FromQuery] DateTime? date,
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10,
+        CancellationToken cancellationToken = default)
     {
-        var showtimes = await _context.Showtimes
-            .Include(s => s.Movie)
-            .Include(s => s.Hall)
-            .Where(s => !s.IsDeleted && s.IsActive)
-            .Select(s => new ShowtimeResponse
-            {
-                ShowtimeId = s.ShowtimeId,
-                MovieTitle = s.Movie.Title,
-                HallName = s.Hall.Name,
-                StartTime = s.StartTime,
-                EndTime = s.EndTime,
-                BasePrice = s.BasePrice,
-                AvailableSeats = s.AvailableSeats,
-                IsActive = s.IsActive
-            })
-            .OrderBy(s => s.StartTime)
-            .ToListAsync();
+        var result = await _showtimeService.GetShowtimesAsync(
+            movieId, date, pageNumber, pageSize, cancellationToken);
 
-        return Ok(showtimes);
+        Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+        Response.Headers.Append("X-Total-Pages", result.TotalPages.ToString());
+
+        return Ok(result);
     }
 
     /// <summary>
     /// Отримання сеансу за ID
     /// </summary>
-    [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ShowtimeResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetShowtimeById(long id)
+    /// <param name="id">ID сеансу</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Інформація про сеанс</returns>
+    /// <response code="200">Сеанс знайдено</response>
+    /// <response code="404">Сеанс не знайдено</response>
+    [HttpGet("{id:long}")]
+    [ProducesResponseType(typeof(ShowtimeDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetShowtimeById(long id, CancellationToken cancellationToken)
     {
-        var showtime = await _context.Showtimes
-            .Include(s => s.Movie)
-            .Include(s => s.Hall)
-            .Where(s => s.ShowtimeId == id && !s.IsDeleted)
-            .Select(s => new ShowtimeResponse
-            {
-                ShowtimeId = s.ShowtimeId,
-                MovieTitle = s.Movie.Title,
-                HallName = s.Hall.Name,
-                StartTime = s.StartTime,
-                EndTime = s.EndTime,
-                BasePrice = s.BasePrice,
-                AvailableSeats = s.AvailableSeats,
-                IsActive = s.IsActive
-            })
-            .FirstOrDefaultAsync();
-
-        if (showtime == null)
-            return NotFound(new ErrorResponse { Error = "Showtime not found" });
-
+        var showtime = await _showtimeService.GetShowtimeByIdAsync(id, cancellationToken);
         return Ok(showtime);
     }
 
     /// <summary>
     /// Створення нового сеансу
     /// </summary>
+    /// <param name="dto">Дані нового сеансу</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Створений сеанс</returns>
+    /// <response code="201">Сеанс успішно створено</response>
+    /// <response code="400">Некоректні дані</response>
+    /// <response code="404">Фільм або зал не знайдено</response>
+    /// <response code="409">Зал зайнятий у вказаний час</response>
     [HttpPost]
-    [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateShowtime([FromBody] CreateShowtimeRequest request)
+    [ProducesResponseType(typeof(ShowtimeDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> CreateShowtime(
+        [FromBody] CreateShowtimeDto dto,
+        CancellationToken cancellationToken)
     {
-        try
-        {
-            //перевірка існування фільму та залу
-            var movie = await _context.Movies.FindAsync(request.MovieId);
-            var hall = await _context.Halls.FindAsync(request.HallId);
-
-            if (movie == null || movie.IsDeleted)
-                return BadRequest(new ErrorResponse { Error = "Movie not found" });
-
-            if (hall == null || hall.IsDeleted)
-                return BadRequest(new ErrorResponse { Error = "Hall not found" });
-
-            //розрахунок EndTime на основі тривалості фільму
-            var endTime = request.StartTime.AddMinutes(movie.DurationMinutes);
-
-            var showtime = new Showtime
-            {
-                MovieId = request.MovieId,
-                HallId = request.HallId,
-                StartTime = request.StartTime,
-                EndTime = endTime,
-                BasePrice = request.BasePrice,
-                AvailableSeats = hall.Capacity,
-                IsActive = true
-            };
-
-            _context.Showtimes.Add(showtime);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(
-                nameof(GetShowtimeById),
-                new { id = showtime.ShowtimeId },
-                new ApiResponse<long>
-                {
-                    Success = true,
-                    Message = "Showtime created successfully",
-                    Data = showtime.ShowtimeId
-                });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating showtime");
-            return BadRequest(new ErrorResponse
-            {
-                Error = "Failed to create showtime",
-                Details = ex.Message
-            });
-        }
+        var showtime = await _showtimeService.CreateShowtimeAsync(dto, cancellationToken);
+        
+        return CreatedAtAction(
+            nameof(GetShowtimeById),
+            new { id = showtime.ShowtimeId },
+            showtime);
     }
 
     /// <summary>
-    /// Сеанси для конкретного фільму
+    /// Видалення сеансу
     /// </summary>
-    [HttpGet("movie/{movieId}")]
-    [ProducesResponseType(typeof(IEnumerable<ShowtimeResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetShowtimesByMovie(long movieId)
+    /// <param name="id">ID сеансу</param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="204">Сеанс успішно видалено</response>
+    /// <response code="404">Сеанс не знайдено</response>
+    [HttpDelete("{id:long}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteShowtime(long id, CancellationToken cancellationToken)
     {
-        var showtimes = await _context.Showtimes
-            .Include(s => s.Movie)
-            .Include(s => s.Hall)
-            .Where(s => s.MovieId == movieId && !s.IsDeleted && s.IsActive)
-            .Select(s => new ShowtimeResponse
-            {
-                ShowtimeId = s.ShowtimeId,
-                MovieTitle = s.Movie.Title,
-                HallName = s.Hall.Name,
-                StartTime = s.StartTime,
-                EndTime = s.EndTime,
-                BasePrice = s.BasePrice,
-                AvailableSeats = s.AvailableSeats,
-                IsActive = s.IsActive
-            })
-            .OrderBy(s => s.StartTime)
-            .ToListAsync();
-
-        return Ok(showtimes);
+        await _showtimeService.DeleteShowtimeAsync(id, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
-    /// Сеанси на конкретну дату
+    /// Оновлення кількості доступних місць (для Booking Service)
     /// </summary>
-    [HttpGet("date/{date}")]
-    [ProducesResponseType(typeof(IEnumerable<ShowtimeResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetShowtimesByDate(DateTime date)
+    /// <param name="id">ID сеансу</param>
+    /// <param name="seatsToReserve">Кількість місць для резервування</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Результат операції</returns>
+    /// <response code="200">Місця успішно зарезервовано</response>
+    /// <response code="400">Недостатньо вільних місць</response>
+    /// <response code="404">Сеанс не знайдено</response>
+    [HttpPatch("{id:long}/seats")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateSeats(
+        long id,
+        [FromBody] int seatsToReserve,
+        CancellationToken cancellationToken)
     {
-        var startOfDay = date.Date;
-        var endOfDay = date.Date.AddDays(1);
-
-        var showtimes = await _context.Showtimes
-            .Include(s => s.Movie)
-            .Include(s => s.Hall)
-            .Where(s => s.StartTime >= startOfDay && s.StartTime < endOfDay 
-                     && !s.IsDeleted && s.IsActive)
-            .Select(s => new ShowtimeResponse
-            {
-                ShowtimeId = s.ShowtimeId,
-                MovieTitle = s.Movie.Title,
-                HallName = s.Hall.Name,
-                StartTime = s.StartTime,
-                EndTime = s.EndTime,
-                BasePrice = s.BasePrice,
-                AvailableSeats = s.AvailableSeats,
-                IsActive = s.IsActive
-            })
-            .OrderBy(s => s.StartTime)
-            .ToListAsync();
-
-        return Ok(showtimes);
-    }
-
-    /// <summary>
-    /// Оновлення доступних місць (для Booking Service)
-    /// </summary>
-    [HttpPatch("{id}/seats")]
-    [ProducesResponseType(typeof(ApiResponse<int>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateAvailableSeats(long id, [FromBody] int seatsToReserve)
-    {
-        var showtime = await _context.Showtimes.FindAsync(id);
-
-        if (showtime == null || showtime.IsDeleted)
-            return NotFound(new ErrorResponse { Error = "Showtime not found" });
-
-        if (showtime.AvailableSeats < seatsToReserve)
-            return BadRequest(new ErrorResponse { Error = "Not enough seats available" });
-
-        showtime.AvailableSeats -= seatsToReserve;
-        await _context.SaveChangesAsync();
-
-        return Ok(new ApiResponse<int>
+        await _showtimeService.UpdateSeatsAsync(id, seatsToReserve, cancellationToken);
+        
+        return Ok(new
         {
             Success = true,
             Message = "Seats reserved successfully",
-            Data = showtime.AvailableSeats
-        });
-    }
-
-    /// <summary>
-    /// Видалення сеансу 
-    /// </summary>
-    [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteShowtime(long id)
-    {
-        var showtime = await _context.Showtimes
-            .Include(s => s.Movie)
-            .FirstOrDefaultAsync(s => s.ShowtimeId == id);
-
-        if (showtime == null || showtime.IsDeleted)
-            return NotFound(new ErrorResponse { Error = "Showtime not found" });
-
-        showtime.IsDeleted = true;
-        showtime.IsActive = false;
-        await _context.SaveChangesAsync();
-
-        return Ok(new ApiResponse<string>
-        {
-            Success = true,
-            Message = "Showtime cancelled successfully",
-            Data = showtime.Movie.Title
+            ShowtimeId = id,
+            ReservedSeats = seatsToReserve
         });
     }
 }

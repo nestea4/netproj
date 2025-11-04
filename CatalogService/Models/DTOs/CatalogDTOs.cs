@@ -36,13 +36,13 @@ public class MovieResponse
 /// <summary>
 /// DTO для додаткових деталей фільму
 /// </summary>
-public class MovieDetailsDto
+/*public class MovieDetailsDto
 {
     public string Country { get; set; } = string.Empty;
     public string Language { get; set; } = string.Empty;
     public string AgeRating { get; set; } = string.Empty;
     public string Cast { get; set; } = string.Empty;
-}
+}*/
 
 /// <summary>
 /// Запит на створення сеансу

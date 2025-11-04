@@ -7,7 +7,7 @@ namespace BookingService.Dal.UnitOfWork;
 
 /// <summary>
 /// Unit of Work для координації транзакцій між репозиторіями
-/// Забезпечує атомарність операцій та узгодженість даних
+///для атомарності операцій та узгодженості даних
 /// </summary>
 public class UnitOfWork : IUnitOfWork
 {
@@ -27,7 +27,7 @@ public class UnitOfWork : IUnitOfWork
     }
 
     /// <summary>
-    /// Lazy initialization репозиторіїв з прив'язкою до спільного з'єднання
+    /// lazy initialization репозиторіїв з прив'язкою до спільного з'єднання
     /// </summary>
     public ICustomerRepository Customers
     {
@@ -84,12 +84,10 @@ public class UnitOfWork : IUnitOfWork
 
     /// <summary>
     /// Початок транзакції з вказаним рівнем ізоляції
-    /// 
-    /// Рівні ізоляції:
-    /// - ReadCommitted (default): Баланс між консистентністю та performance
-    /// - ReadUncommitted: Найшвидший, але можливі dirty reads
-    /// - RepeatableRead: Захищає від non-repeatable reads, але можливі phantom reads
-    /// - Serializable: Найсуворіший, але найповільніший (можливі deadlocks)
+    /// -ReadCommitted (дефолт): баланс між консистентністю та performance
+    /// -ReadUncommitted: найшвидший, але можливі dirty reads
+    /// -RepeatableRead: захищає від non-repeatable reads
+    /// -Serializable: найповільніший (можливі deadlocks)
     /// 
     /// Trade-offs:
     /// - ReadCommitted: добре для більшості OLTP сценаріїв (створення бронювань)
@@ -111,7 +109,7 @@ public class UnitOfWork : IUnitOfWork
 
         _transaction = await _connection.BeginTransactionAsync(isolationLevel, cancellationToken);
 
-        // Прив'язуємо існуючі репозиторії до нової транзакції
+        //приіязую існуючі репозиторії до нової транзакції
         if (_customers is CustomerRepository customerRepo)
         {
             customerRepo.SetSharedConnection(_connection, _transaction);
@@ -127,7 +125,7 @@ public class UnitOfWork : IUnitOfWork
     }
 
     /// <summary>
-    /// Фіксація всіх змін в базі даних
+    ///фіксація всіх змін в базі даних
     /// </summary>
     public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
@@ -152,7 +150,7 @@ public class UnitOfWork : IUnitOfWork
     }
 
     /// <summary>
-    /// Відкат всіх змін
+    ///відкат всіх змін
     /// </summary>
     public async Task RollbackAsync(CancellationToken cancellationToken = default)
     {

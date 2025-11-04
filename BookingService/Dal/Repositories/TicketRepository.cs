@@ -8,7 +8,6 @@ namespace BookingService.Dal.Repositories;
 
 /// <summary>
 /// Репозиторій для роботи з квитками (ADO.NET + Dapper)
-/// Демонструє комбінований підхід: Dapper для читань, ADO.NET для складних операцій
 /// </summary>
 public class TicketRepository : ITicketRepository
 {

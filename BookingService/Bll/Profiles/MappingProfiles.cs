@@ -6,8 +6,6 @@ namespace BookingService.Bll.Profiles;
 
 /// <summary>
 /// Профілі маппінгу для AutoMapper
-/// Централізована конфігурація перетворень між Domain моделями та DTO
-/// Важливо: всі маппінги повинні бути протестовані через AssertConfigurationIsValid()
 /// </summary>
 public class MappingProfiles : Profile
 {
@@ -20,16 +18,16 @@ public class MappingProfiles : Profile
 
     /// <summary>
     /// Маппінги для Customer
-    /// Domain Model <-> DTO перетворення
+    /// Domain Model - DTO перетворення
     /// </summary>
     private void ConfigureCustomerMappings()
     {
-        // Customer -> CustomerDto (для відображення)
+        //Customer в CustomerDto (для відображення)
         CreateMap<Customer, CustomerDto>()
             .ForMember(dest => dest.FullName, 
                 opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
-        // CreateCustomerRequest -> Customer (для створення)
+        // CreateCustomerRequest в Customer (для створення)
         CreateMap<CreateCustomerRequest, Customer>()
             .ForMember(dest => dest.CustomerId, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.Now))
@@ -38,7 +36,7 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => "API"))
             .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => false));
 
-        // UpdateCustomerRequest -> Customer (для оновлення)
+        // UpdateCustomerRequest в Customer (для оновлення)
         CreateMap<UpdateCustomerRequest, Customer>()
             .ForMember(dest => dest.CustomerId, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -50,23 +48,18 @@ public class MappingProfiles : Profile
 
     /// <summary>
     /// Маппінги для Booking
-    /// Включає маппінг складних об'єктів та computed properties
     /// </summary>
     private void ConfigureBookingMappings()
     {
-        // Booking -> BookingDto (спрощене відображення для списків)
+        // Booking в BookingDto (спрощене відображення для списків)
         CreateMap<Booking, BookingDto>()
             .ForMember(dest => dest.TicketCount, 
                 opt => opt.MapFrom(src => src.Tickets.Count));
 
-        // Booking -> BookingDetailsResponse (повне відображення з деталями)
-        // Зверніть увагу: BookingDetailsResponse формується в репозиторії через Dapper multi-mapping
-        // тому цей маппінг може не використовуватись, але залишаємо для консистентності
-
-        // BookingStatusHistory -> BookingStatusHistoryDto
+        // BookingStatusHistory в BookingStatusHistoryDto
         CreateMap<BookingStatusHistory, BookingStatusHistoryDto>();
 
-        // BookingDetails -> можна додати маппінг якщо потрібно
+        // BookingDetails - можна додати маппінг якщо потрібно
         CreateMap<BookingDetails, BookingDetailsResponse>()
             .ForMember(dest => dest.BookingId, opt => opt.Ignore())
             .ForMember(dest => dest.BookingNumber, opt => opt.Ignore())
@@ -86,11 +79,10 @@ public class MappingProfiles : Profile
 
     /// <summary>
     /// Маппінги для Ticket
-    /// Демонструє маппінг computed properties та rename полів
     /// </summary>
     private void ConfigureTicketMappings()
     {
-        // Ticket -> TicketInfo (для відображення в бронюванні)
+        // Ticket в TicketInfo (для відображення в бронюванні)
         CreateMap<Ticket, TicketInfo>()
             .ForMember(dest => dest.Seat, 
                 opt => opt.MapFrom(src => src.FullSeat)) // Computed property
@@ -99,7 +91,7 @@ public class MappingProfiles : Profile
             .ForMember(dest => dest.Type, 
                 opt => opt.MapFrom(src => src.TicketType)); // Rename
 
-        // AddTicketRequest -> Ticket (для створення квитка)
+        // AddTicketRequest в Ticket (для створення квитка)
         CreateMap<AddTicketRequest, Ticket>()
             .ForMember(dest => dest.TicketId, opt => opt.Ignore())
             .ForMember(dest => dest.BookingId, opt => opt.Ignore())

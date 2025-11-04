@@ -8,8 +8,6 @@ namespace BookingService.Bll.Services;
 
 /// <summary>
 /// Сервіс для роботи з бронюваннями
-/// Координує складні транзакційні операції через Unit of Work
-/// Демонструє використання UoW для атомарності операцій
 /// </summary>
 public class BookingService : IBookingService
 {
@@ -61,40 +59,38 @@ public class BookingService : IBookingService
 
     /// <summary>
     /// Створення бронювання з квитками в транзакції
-    /// Демонструє використання UoW для атомарності операцій:
+    ///UoW для атомарності операцій:
     /// 1. Перевірка клієнта
     /// 2. Перевірка доступності місць
     /// 3. Створення бронювання
     /// 4. Додавання квитків
-    /// Всі операції виконуються в одній транзакції - або всі успішні, або rollback
+    /// всі операції виконуються в одній транзакції - або всі успішні, або rollback
     /// </summary>
     public async Task<CreateBookingResponse> CreateBookingWithTicketsAsync(
         CreateBookingWithTicketsRequest request, 
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Creating booking with tickets for customer {CustomerId}", request.CustomerId);
-
-        // Валідація запиту
+        
         ValidateCreateBookingRequest(request);
 
         try
         {
-            // Початок транзакції з рівнем ізоляції ReadCommitted
-            // Для OLTP операцій (створення бронювань) це оптимальний баланс
-            // між консистентністю даних та performance
+            // початок транзакції з рівнем ізоляції ReadCommitted
+            // для створення бронювань
             await _unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
 
-            // 1. Перевірка існування клієнта
+            //перевірка існування клієнта
             var customer = await _unitOfWork.Customers.GetByIdAsync(request.CustomerId, cancellationToken);
             if (customer == null)
             {
                 throw new InvalidOperationException($"Customer with ID {request.CustomerId} not found");
             }
 
-            // 2. Розрахунок загальної суми
+            //розрахунок загальної суми
             decimal totalAmount = request.Tickets.Sum(t => t.TicketPrice);
 
-            // 3. Перевірка доступності місць (бізнес-логіка)
+            //перевірка доступності місць 
             foreach (var ticket in request.Tickets)
             {
                 var isAvailable = await _unitOfWork.Tickets.IsSeatAvailableAsync(
@@ -110,14 +106,14 @@ public class BookingService : IBookingService
                 }
             }
 
-            // 4. Створення бронювання через збережувану процедуру
+            //створення бронювання через збережувану процедуру
             var (bookingId, bookingNumber) = await _unitOfWork.Bookings.CreateBookingAsync(
                 request.CustomerId, 
                 totalAmount, 
                 "API", 
                 cancellationToken);
 
-            // 5. Додавання квитків до бронювання
+            //додавання квитків до бронювання
             foreach (var ticket in request.Tickets)
             {
                 await _unitOfWork.Bookings.AddTicketAsync(
@@ -127,12 +123,12 @@ public class BookingService : IBookingService
                     cancellationToken);
             }
 
-            // Commit транзакції - всі операції успішні
+            //commit транзакції
             await _unitOfWork.CommitAsync(cancellationToken);
 
             _logger.LogInformation("Booking created successfully: {BookingNumber}", bookingNumber);
 
-            // 6. Отримання повної інформації про створене бронювання
+            //отримання повної інформації про створене бронювання
             var bookingDetails = await _unitOfWork.Bookings.GetBookingWithTicketsAsync(bookingId, cancellationToken);
 
             return new CreateBookingResponse
@@ -147,7 +143,7 @@ public class BookingService : IBookingService
         }
         catch (Exception ex)
         {
-            // Rollback при будь-якій помилці
+            //rollback при будь-якій помилці
             if (_unitOfWork.HasActiveTransaction)
             {
                 await _unitOfWork.RollbackAsync(cancellationToken);
@@ -201,8 +197,7 @@ public class BookingService : IBookingService
 
     /// <summary>
     /// Підтвердження та оплата в одній транзакції
-    /// Демонструє складну бізнес-логіку з транзакційністю
-    /// Використовується RepeatableRead для критичних операцій оплати
+    /// RepeatableRead для критичних операцій оплати
     /// </summary>
     public async Task ConfirmAndPayAsync(long bookingId, string paymentMethod, CancellationToken cancellationToken = default)
     {
@@ -215,11 +210,9 @@ public class BookingService : IBookingService
 
         try
         {
-            // Використовуємо RepeatableRead для критичних операцій оплати
-            // Захист від non-repeatable reads під час валідації та оплати
             await _unitOfWork.BeginTransactionAsync(IsolationLevel.RepeatableRead, cancellationToken);
 
-            // Перевірка існування та статусу
+            //реревірка існування та статусу
             var booking = await _unitOfWork.Bookings.GetByIdAsync(bookingId, cancellationToken);
             if (booking == null)
             {
@@ -231,13 +224,13 @@ public class BookingService : IBookingService
                 throw new InvalidOperationException($"Cannot confirm and pay booking in status {booking.Status}");
             }
 
-            // Підтвердження
+            //підтвердження
             await _unitOfWork.Bookings.ConfirmBookingAsync(bookingId, "API", cancellationToken);
 
-            // Оплата
+            //оплата
             await _unitOfWork.Bookings.PayBookingAsync(bookingId, paymentMethod, "API", cancellationToken);
 
-            // Commit обох операцій
+            //commit обох операцій
             await _unitOfWork.CommitAsync(cancellationToken);
 
             _logger.LogInformation("Booking confirmed and paid successfully: {BookingId}", bookingId);
@@ -292,9 +285,7 @@ public class BookingService : IBookingService
         CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Getting booking statistics from {FromDate} to {ToDate}", fromDate, toDate);
-
-        // Для статистики можна використовувати окремі запити або агрегації
-        // Тут спрощений варіант - в реальному проекті краще використовувати Views або складні запити
+        
         var allBookings = await _unitOfWork.Bookings.GetAllAsync(cancellationToken);
         
         var bookingsInRange = allBookings
@@ -320,7 +311,6 @@ public class BookingService : IBookingService
 
     /// <summary>
     /// Валідація запиту на створення бронювання
-    /// Бізнес-правила та базова валідація
     /// </summary>
     private void ValidateCreateBookingRequest(CreateBookingWithTicketsRequest request)
     {

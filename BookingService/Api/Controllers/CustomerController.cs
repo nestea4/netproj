@@ -8,8 +8,6 @@ namespace BookingService.Api.Controllers;
 
 /// <summary>
 /// API для управління клієнтами
-/// Thin controller - вся бізнес-логіка в BLL
-/// Демонструє правильну роботу з HTTP-статусами, асинхронністю та атрибутною маршрутизацією
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
@@ -108,7 +106,7 @@ public class CustomerController : ControllerBase
     /// <param name="request">Дані для створення клієнта</param>
     /// <param name="cancellationToken">Токен скасування</param>
     /// <returns>Створений клієнт</returns>
-    /// <response code="201">Клієнта успішно створено (повертає Location header)</response>
+    /// <response code="201">Клієнта успішно створено </response>
     /// <response code="400">Помилка валідації вхідних даних</response>
     /// <response code="409">Конфлікт - email вже використовується</response>
     [HttpPost]
@@ -128,7 +126,7 @@ public class CustomerController : ControllerBase
 
             _logger.LogInformation("Customer created successfully with ID: {CustomerId}", customer.CustomerId);
 
-            // 201 Created з Location header, який вказує на URL нового ресурсу
+            //201 
             return CreatedAtAction(
                 nameof(GetById),
                 new { id = customer.CustomerId },
@@ -137,7 +135,7 @@ public class CustomerController : ControllerBase
         }
         catch (InvalidOperationException ex) when (ex.Message.Contains("already exists"))
         {
-            // 409 Conflict - email вже використовується
+            //409 Conflict - email вже використовується
             return Conflict(new ErrorResponse
             {
                 Error = "Email conflict",
@@ -146,7 +144,7 @@ public class CustomerController : ControllerBase
         }
         catch (ArgumentException ex)
         {
-            // 400 Bad Request - валідація не пройшла
+            //400 Bad Request - валідація не пройшла
             return BadRequest(new ErrorResponse
             {
                 Error = "Validation failed",
