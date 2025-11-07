@@ -5,7 +5,7 @@ namespace ReviewService.Models;
 
 /// <summary>
 /// Коментар до відгуку (Embedded document)
-/// Демонструє вкладені документи та масиви
+/// тут вкладені документи та масиви
 /// </summary>
 public class Comment
 {
@@ -24,7 +24,7 @@ public class Comment
     [BsonElement("likes")]
     public int Likes { get; set; }
 
-    // Вкладені відповіді на коментар (nested array)
+    //вкладені відповіді на коментар (nested array)
     [BsonElement("replies")]
     public List<CommentReply> Replies { get; set; } = new();
 

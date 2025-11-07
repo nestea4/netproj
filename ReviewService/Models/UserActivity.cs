@@ -5,7 +5,7 @@ namespace ReviewService.Models;
 
 /// <summary>
 /// Активність користувача (окрема колекція)
-/// Демонструє: гнучку схему, різні типи активності
+/// Демонстру: гнучку схему, різні типи активності
 /// </summary>
 public class UserActivity
 {
@@ -17,15 +17,15 @@ public class UserActivity
     public long UserId { get; set; }
 
     [BsonElement("activityType")]
-    public string ActivityType { get; set; } = string.Empty; // "Like", "Dislike", "View", "Comment"
+    public string ActivityType { get; set; } = string.Empty; // "Like","Dislike","View","Comment"
 
     [BsonElement("targetType")]
-    public string TargetType { get; set; } = string.Empty; // "Review", "Discussion", "Comment"
+    public string TargetType { get; set; } = string.Empty; // "Review","Discussion","Comment"
 
     [BsonElement("targetId")]
     public string TargetId { get; set; } = string.Empty;
 
-    // Гнучка схема - різні поля для різних типів активності
+    //гнучка схема різні поля для різних типів активності
     [BsonElement("metadata")]
     [BsonExtraElements]
     public Dictionary<string, object> Metadata { get; set; } = new();

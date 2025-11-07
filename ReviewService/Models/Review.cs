@@ -13,19 +13,19 @@ public class Review
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
-    // Reference до фільму з Catalog Service
+    //reference до фільму з Catalog Service
     [BsonElement("movieId")]
     public long MovieId { get; set; }
     
-    // Денормалізація для швидкого читання
+    //lенормалізація для швидкого читання
     [BsonElement("movieTitle")]
     public string MovieTitle { get; set; } = string.Empty;
 
-    // Reference до користувача з Booking Service
+    //reference до користувача з Booking Service
     [BsonElement("userId")]
     public long UserId { get; set; }
     
-    // Денормалізація
+    //денормалізація
     [BsonElement("userName")]
     public string UserName { get; set; } = string.Empty;
 
@@ -40,13 +40,13 @@ public class Review
     public int Rating { get; set; } // 1-10
 
     [BsonElement("reviewType")]
-    public string ReviewType { get; set; } = "Standard"; // Standard, Detailed, Quick
+    public string ReviewType { get; set; } = "Standard"; // Standard,Detailed,Quick
 
-    // Embedded document - масив коментарів
+    //embedded document - масив коментарів
     [BsonElement("comments")]
     public List<Comment> Comments { get; set; } = new();
 
-    // Статистика (денормалізація)
+    //Статистика (денормалізація)
     [BsonElement("likes")]
     public int Likes { get; set; }
 
@@ -56,9 +56,9 @@ public class Review
     [BsonElement("viewCount")]
     public int ViewCount { get; set; }
 
-    // Метадані
+    //метадані
     [BsonElement("isVerifiedPurchase")]
-    public bool IsVerifiedPurchase { get; set; } // Чи купив квиток
+    public bool IsVerifiedPurchase { get; set; } //Чи купив квиток
 
     [BsonElement("isSpoiler")]
     public bool IsSpoiler { get; set; }
@@ -66,7 +66,7 @@ public class Review
     [BsonElement("tags")]
     public List<string> Tags { get; set; } = new(); // "Masterpiece", "Boring", "Visually Stunning"
 
-    // Аудит
+    //Аудит
     [BsonElement("createdAt")]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

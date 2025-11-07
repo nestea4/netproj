@@ -16,11 +16,11 @@ public class MongoDbContext
         var client = new MongoClient(settings.ConnectionString);
         _database = client.GetDatabase(settings.DatabaseName);
         
-        // Створення індексів при ініціалізації
+        //створення індексів при ініціалізації
         CreateIndexes();
     }
 
-    // Колекції
+    //колекції
     public IMongoCollection<Review> Reviews => _database.GetCollection<Review>("Reviews");
     public IMongoCollection<Discussion> Discussions => _database.GetCollection<Discussion>("Discussions");
     public IMongoCollection<UserActivity> UserActivities => _database.GetCollection<UserActivity>("UserActivity");
@@ -30,7 +30,7 @@ public class MongoDbContext
     /// </summary>
     private void CreateIndexes()
     {
-        // Індекси для Reviews
+        //індекси для Reviews
         var reviewIndexKeys = Builders<Review>.IndexKeys
             .Ascending(r => r.MovieId)
             .Descending(r => r.CreatedAt);
@@ -42,13 +42,13 @@ public class MongoDbContext
         var reviewUserIndex = Builders<Review>.IndexKeys.Ascending(r => r.UserId);
         Reviews.Indexes.CreateOne(new CreateIndexModel<Review>(reviewUserIndex));
 
-        // Індекси для Discussions
+        //індекси для Discussions
         var discussionMovieIndex = Builders<Discussion>.IndexKeys
             .Ascending(d => d.MovieId)
             .Descending(d => d.CreatedAt);
         Discussions.Indexes.CreateOne(new CreateIndexModel<Discussion>(discussionMovieIndex));
 
-        // Індекси для UserActivity
+        //індекси для UserActivity
         var activityUserIndex = Builders<UserActivity>.IndexKeys
             .Ascending(a => a.UserId)
             .Descending(a => a.CreatedAt);

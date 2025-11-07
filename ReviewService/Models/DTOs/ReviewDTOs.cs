@@ -103,7 +103,7 @@ public class LikeRequest
     public long UserId { get; set; }
     public string TargetType { get; set; } = string.Empty; // "Review", "Comment"
     public string TargetId { get; set; } = string.Empty;
-    public bool IsLike { get; set; } // true = like, false = dislike
+    public bool IsLike { get; set; } //true = like, false = dislike
 }
 
 /// <summary>

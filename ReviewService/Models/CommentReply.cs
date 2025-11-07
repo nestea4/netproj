@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 namespace ReviewService.Models;
 
 /// <summary>
-/// Відповідь на коментар (deeply nested)
+/// Відповідь на коментар
 /// </summary>
 public class CommentReply
 {

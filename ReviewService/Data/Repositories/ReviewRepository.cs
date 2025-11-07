@@ -132,7 +132,7 @@ public class ReviewRepository
     }
 
     /// <summary>
-    /// Видалення відгуку (soft delete)
+    /// Видалення відгуку 
     /// </summary>
     public async Task<bool> DeleteAsync(string id)
     {
@@ -142,7 +142,7 @@ public class ReviewRepository
     }
 
     /// <summary>
-    /// Пошук відгуків (full-text search simulation)
+    /// Пошук відгуків 
     /// </summary>
     public async Task<List<Review>> SearchAsync(string query)
     {

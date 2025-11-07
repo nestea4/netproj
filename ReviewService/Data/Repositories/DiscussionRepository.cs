@@ -81,7 +81,7 @@ public class DiscussionRepository
     }
 
     /// <summary>
-    /// Видалення обговорення (soft delete)
+    /// Видалення обговорення
     /// </summary>
     public async Task<bool> DeleteAsync(string id)
     {

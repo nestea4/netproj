@@ -20,11 +20,11 @@ public class Showtime
     public DateTime UpdatedAt { get; set; }
     public bool IsDeleted { get; set; }
     
-    // Navigation
+    //Navigation
     public Movie Movie { get; set; } = null!;
     public Hall Hall { get; set; } = null!;
     
-    // Computed property
+    //Computed property
     public bool IsPastShowtime => StartTime < DateTime.Now;
     public int DurationMinutes => (int)(EndTime - StartTime).TotalMinutes;
 }

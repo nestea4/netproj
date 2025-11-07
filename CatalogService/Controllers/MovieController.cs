@@ -1,6 +1,7 @@
 using CatalogService.Data;
 using CatalogService.Models;
 using CatalogService.Models.DTOs;
+using CatalogService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,256 +13,161 @@ namespace CatalogService.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Produces("application/json")]
-public class MovieController : ControllerBase
+public class MoviesController : ControllerBase
 {
-    private readonly CatalogDbContext _context;
-    private readonly ILogger<MovieController> _logger;
+    private readonly IMovieService _movieService;
+    private readonly ILogger<MoviesController> _logger;
 
-    public MovieController(CatalogDbContext context, ILogger<MovieController> logger)
+    public MoviesController(IMovieService movieService, ILogger<MoviesController> logger)
     {
-        _context = context;
+        _movieService = movieService;
         _logger = logger;
     }
 
     /// <summary>
-    /// Отримання всіх фільмів
+    /// Отримання списку фільмів з фільтрацією, сортуванням та пагінацією
     /// </summary>
+    /// <param name="filters">Параметри фільтрації</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Посторінковий список фільмів</returns>
+    /// <response code="200">Успішне отримання списку фільмів</response>
+    /// <response code="400">Некоректні параметри запиту</response>
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<MovieResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAllMovies()
+    [ProducesResponseType(typeof(PagedResult<MovieDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetMovies(
+        [FromQuery] MovieFilterParameters filters,
+        CancellationToken cancellationToken)
     {
-        var movies = await _context.Movies
-            .Include(m => m.Details)
-            .Include(m => m.MovieCategories)
-                .ThenInclude(mc => mc.Category)
-            .Where(m => !m.IsDeleted)
-            .Select(m => new MovieResponse
-            {
-                MovieId = m.MovieId,
-                Title = m.Title,
-                Description = m.Description,
-                DurationMinutes = m.DurationMinutes,
-                ReleaseDate = m.ReleaseDate,
-                Director = m.Director,
-                Rating = m.Rating,
-                PosterUrl = m.PosterUrl,
-                Categories = m.MovieCategories.Select(mc => mc.Category.Name).ToList(),
-                Details = m.Details != null ? new MovieDetailsDto
-                {
-                    Country = m.Details.Country,
-                    Language = m.Details.Language,
-                    AgeRating = m.Details.AgeRating,
-                    Cast = m.Details.Cast
-                } : null
-            })
-            .ToListAsync();
+        var result = await _movieService.GetMoviesAsync(filters, cancellationToken);
+        
+        //Link headers для пагінації
+        if (result.HasNext)
+        {
+            Response.Headers.Append("X-Has-Next", "true");
+        }
+        if (result.HasPrevious)
+        {
+            Response.Headers.Append("X-Has-Previous", "true");
+        }
+        Response.Headers.Append("X-Total-Count", result.TotalCount.ToString());
+        Response.Headers.Append("X-Total-Pages", result.TotalPages.ToString());
 
-        return Ok(movies);
+        return Ok(result);
     }
 
     /// <summary>
-    /// Отримання фільму за ID
+    /// Отримання детальної інформації про фільм за ID
     /// </summary>
-    [HttpGet("{id}")]
-    [ProducesResponseType(typeof(MovieResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetMovieById(long id)
+    /// <param name="id">ID фільму</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Детальна інформація про фільм</returns>
+    /// <response code="200">Фільм знайдено</response>
+    /// <response code="404">Фільм не знайдено</response>
+    [HttpGet("{id:long}")]
+    [ProducesResponseType(typeof(MovieDetailDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMovieById(long id, CancellationToken cancellationToken)
     {
-        var movie = await _context.Movies
-            .Include(m => m.Details)
-            .Include(m => m.MovieCategories)
-                .ThenInclude(mc => mc.Category)
-            .Where(m => m.MovieId == id && !m.IsDeleted)
-            .Select(m => new MovieResponse
-            {
-                MovieId = m.MovieId,
-                Title = m.Title,
-                Description = m.Description,
-                DurationMinutes = m.DurationMinutes,
-                ReleaseDate = m.ReleaseDate,
-                Director = m.Director,
-                Rating = m.Rating,
-                PosterUrl = m.PosterUrl,
-                Categories = m.MovieCategories.Select(mc => mc.Category.Name).ToList(),
-                Details = m.Details != null ? new MovieDetailsDto
-                {
-                    Country = m.Details.Country,
-                    Language = m.Details.Language,
-                    AgeRating = m.Details.AgeRating,
-                    Cast = m.Details.Cast
-                } : null
-            })
-            .FirstOrDefaultAsync();
-
-        if (movie == null)
-            return NotFound(new ErrorResponse { Error = "Movie not found" });
-
+        var movie = await _movieService.GetMovieByIdAsync(id, cancellationToken);
         return Ok(movie);
+    }
+
+    /// <summary>
+    /// Отримання популярних фільмів
+    /// </summary>
+    /// <param name="count">Кількість фільмів (за замовчуванням 10)</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список популярних фільмів</returns>
+    /// <response code="200">Успішне отримання списку</response>
+    [HttpGet("popular")]
+    [ProducesResponseType(typeof(IEnumerable<MovieDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPopularMovies(
+        [FromQuery] int count = 10,
+        CancellationToken cancellationToken = default)
+    {
+        var movies = await _movieService.GetPopularMoviesAsync(count, cancellationToken);
+        return Ok(movies);
     }
 
     /// <summary>
     /// Створення нового фільму
     /// </summary>
+    /// <param name="dto">Дані нового фільму</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Створений фільм</returns>
+    /// <response code="201">Фільм успішно створено</response>
+    /// <response code="400">Некоректні дані</response>
     [HttpPost]
-    [ProducesResponseType(typeof(ApiResponse<long>), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateMovie([FromBody] CreateMovieRequest request)
+    [ProducesResponseType(typeof(MovieDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateMovie(
+        [FromBody] CreateMovieDto dto,
+        CancellationToken cancellationToken)
     {
-        try
-        {
-            var movie = new Movie
-            {
-                Title = request.Title,
-                OriginalTitle = request.OriginalTitle,
-                Description = request.Description,
-                DurationMinutes = request.DurationMinutes,
-                ReleaseDate = request.ReleaseDate,
-                Director = request.Director,
-                Rating = request.Rating,
-                PosterUrl = request.PosterUrl,
-                CreatedBy = "API"
-            };
-
-            _context.Movies.Add(movie);
-            await _context.SaveChangesAsync();
-
-            // Додавання категорій (M:N)
-            if (request.CategoryIds.Any())
-            {
-                foreach (var categoryId in request.CategoryIds)
-                {
-                    _context.MovieCategories.Add(new MovieCategory
-                    {
-                        MovieId = movie.MovieId,
-                        CategoryId = categoryId
-                    });
-                }
-                await _context.SaveChangesAsync();
-            }
-
-            return CreatedAtAction(
-                nameof(GetMovieById),
-                new { id = movie.MovieId },
-                new ApiResponse<long>
-                {
-                    Success = true,
-                    Message = "Movie created successfully",
-                    Data = movie.MovieId
-                });
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error creating movie");
-            return BadRequest(new ErrorResponse
-            {
-                Error = "Failed to create movie",
-                Details = ex.Message
-            });
-        }
+        var movie = await _movieService.CreateMovieAsync(dto, cancellationToken);
+        
+        return CreatedAtAction(
+            nameof(GetMovieById),
+            new { id = movie.MovieId },
+            movie);
     }
 
     /// <summary>
-    /// Оновлення фільму
+    /// Оновлення інформації про фільм
     /// </summary>
-    [HttpPut("{id}")]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateMovie(long id, [FromBody] CreateMovieRequest request)
+    /// <param name="id">ID фільму</param>
+    /// <param name="dto">Оновлені дані фільму</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Оновлений фільм</returns>
+    /// <response code="200">Фільм успішно оновлено</response>
+    /// <response code="400">Некоректні дані</response>
+    /// <response code="404">Фільм не знайдено</response>
+    [HttpPut("{id:long}")]
+    [ProducesResponseType(typeof(MovieDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> UpdateMovie(
+        long id,
+        [FromBody] UpdateMovieDto dto,
+        CancellationToken cancellationToken)
     {
-        var movie = await _context.Movies.FindAsync(id);
-        
-        if (movie == null || movie.IsDeleted)
-            return NotFound(new ErrorResponse { Error = "Movie not found" });
-
-        movie.Title = request.Title;
-        movie.OriginalTitle = request.OriginalTitle;
-        movie.Description = request.Description;
-        movie.DurationMinutes = request.DurationMinutes;
-        movie.ReleaseDate = request.ReleaseDate;
-        movie.Director = request.Director;
-        movie.Rating = request.Rating;
-        movie.PosterUrl = request.PosterUrl;
-        movie.UpdatedBy = "API";
-
-        await _context.SaveChangesAsync();
-
-        return Ok(new ApiResponse<string>
-        {
-            Success = true,
-            Message = "Movie updated successfully",
-            Data = movie.Title
-        });
+        var movie = await _movieService.UpdateMovieAsync(id, dto, cancellationToken);
+        return Ok(movie);
     }
 
     /// <summary>
     /// Видалення фільму (soft delete)
     /// </summary>
-    [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(ApiResponse<string>), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteMovie(long id)
+    /// <param name="id">ID фільму</param>
+    /// <param name="cancellationToken"></param>
+    /// <response code="204">Фільм успішно видалено</response>
+    /// <response code="404">Фільм не знайдено</response>
+    [HttpDelete("{id:long}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteMovie(long id, CancellationToken cancellationToken)
     {
-        var movie = await _context.Movies.FindAsync(id);
-        
-        if (movie == null || movie.IsDeleted)
-            return NotFound(new ErrorResponse { Error = "Movie not found" });
-
-        movie.IsDeleted = true;
-        await _context.SaveChangesAsync();
-
-        return Ok(new ApiResponse<string>
-        {
-            Success = true,
-            Message = "Movie deleted successfully",
-            Data = movie.Title
-        });
+        await _movieService.DeleteMovieAsync(id, cancellationToken);
+        return NoContent();
     }
 
     /// <summary>
-    /// Пошук фільмів за назвою
+    /// Отримання фільмів за категорією
     /// </summary>
-    [HttpGet("search")]
-    [ProducesResponseType(typeof(IEnumerable<MovieResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> SearchMovies([FromQuery] string query)
+    /// <param name="categoryId">ID категорії</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Список фільмів категорії</returns>
+    /// <response code="200">Успішне отримання списку</response>
+    /// <response code="404">Категорія не знайдена</response>
+    [HttpGet("category/{categoryId:long}")]
+    [ProducesResponseType(typeof(IEnumerable<MovieDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMoviesByCategory(
+        long categoryId,
+        CancellationToken cancellationToken)
     {
-        var movies = await _context.Movies
-            .Where(m => !m.IsDeleted && m.Title.Contains(query))
-            .Select(m => new MovieResponse
-            {
-                MovieId = m.MovieId,
-                Title = m.Title,
-                Description = m.Description,
-                DurationMinutes = m.DurationMinutes,
-                Director = m.Director,
-                Rating = m.Rating
-            })
-            .ToListAsync();
-
-        return Ok(movies);
-    }
-
-    /// <summary>
-    /// Фільми за категорією
-    /// </summary>
-    [HttpGet("category/{categoryId}")]
-    [ProducesResponseType(typeof(IEnumerable<MovieResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetMoviesByCategory(long categoryId)
-    {
-        var movies = await _context.MovieCategories
-            .Where(mc => mc.CategoryId == categoryId)
-            .Include(mc => mc.Movie)
-            .Where(mc => !mc.Movie.IsDeleted)
-            .Select(mc => new MovieResponse
-            {
-                MovieId = mc.Movie.MovieId,
-                Title = mc.Movie.Title,
-                Description = mc.Movie.Description,
-                DurationMinutes = mc.Movie.DurationMinutes,
-                Director = mc.Movie.Director,
-                Rating = mc.Movie.Rating
-            })
-            .ToListAsync();
-
+        var movies = await _movieService.GetMoviesByCategoryAsync(categoryId, cancellationToken);
         return Ok(movies);
     }
 }
