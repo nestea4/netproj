@@ -16,70 +16,78 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="88d74b31-3f4a-4fe5-8b2f-108183759a65" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CatalogService/Controllers/CategoriesController.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/CategoryConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/HallConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieCategoryConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/MovieDetailsConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Data/Configurations/ShowtimeConfiguration.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/BusinessException.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/ConflictException.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Exceptions/NotFoundException.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Mappings/MappingProfile.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Middleware/ExceptionHandlingMiddleware.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Middleware/RequestLoggingMiddleware.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Models/DTOs/AllDTOs.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/CategoryRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/GenericRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/ICategoryRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IGenericRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IMovieRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/Interfaces/IShowtimeRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/MovieRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Repositories/ShowtimeRepository.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Services/Interfaces/IMovieService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Services/Interfaces/IShowtimeService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Services/MovieService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Services/ShowtimeService.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/BaseSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ISpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieFilterSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/MovieWithDetailsSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/MovieSpecifications/PopularMoviesSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeCountSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/ShowtimeSpecifications/ShowtimeFilterSpecification.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Specifications/SpecificationEvaluator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/UnitOfWork/IUnitOfWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/UnitOfWork/UnitOfWork.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateMovieDetailsDtoValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateMovieDtoValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/CreateShowtimeDtoValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/MovieFilterValidator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CatalogService/Validators/UpdateMovieDtoValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Discussions/AddPostCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Discussions/CreateDiscussionCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/AddCommentCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/CreateReviewCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/DeleteReviewCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/LikeReviewCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/UpdateReviewCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/Behaviors/LoggingBehavior.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/Behaviors/PerformanceBehavior.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/Behaviors/ValidationBehavior.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/CQRSInterfaces.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/CommentDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/CommentReplyDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/DiscussionDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/DiscussionPostDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/ReviewDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/DTOs/ReviewStatisticsDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Common/Mappings/ReviewMappingProfile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetDiscussionByIdQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetMovieDiscussionsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetPopularDiscussionsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetMovieReviewsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetMovieStatisticsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetReviewByIdQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetTopReviewsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetUserReviewsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/SearchReviewsQuery.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Validators/AddCommentCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Validators/CreateDiscussionCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Application/Validators/CreateReviewCommandValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Common/BaseEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Common/ValueObject.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Entities/Disscution/Discussion.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Entities/Review/Review.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Enums/ReviewType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Exceptions/BusinessRuleException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Exceptions/ConflictException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Exceptions/DomainException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Exceptions/NotFoundException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Exceptions/ValidationException.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Interfaces/IDiscussionRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Interfaces/IRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/Interfaces/IReviewRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/ValueObjects/MovieReference.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/ValueObjects/Rating.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/ValueObjects/ReviewContent.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Domain/ValueObjects/UserReference.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Infrastructure/Data/MongoDbContext.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Infrastructure/Data/MongoDbSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Infrastructure/Data/Repositories/MongoDiscussionRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Infrastructure/Data/Repositories/MongoReviewRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/Infrastructure/Data/Seeding/ReviewDataSeeder.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/WebAPI/Controllers/DiscussionsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/WebAPI/Controllers/ReviewsController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ReviewService/WebAPI/Middleware/GlobalExceptionMiddleware.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CinemaTicketBooking/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Api/Controllers/BookingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/BookingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Api/Controllers/CustomerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Controllers/CustomerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Api/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Api/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Interfaces/IBookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/IBookingService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Interfaces/ICustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Interfaces/ICustomerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Profiles/MappingProfiles.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Services/BookingService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Bll/Services/CustomerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IUnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Interfaces/IUnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/BookingRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/BookingRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/CustomerRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/Repositories/TicketRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BookingService/Dal/UnitOfWork/UnitOfWork.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/CatalogService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/MovieController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Controllers/ShowtimeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Data/CatalogDbContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Models/DTOs/CatalogDTOs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CatalogService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/CatalogService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Configuration/MongoDbSettings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Controllers/DiscussionController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Controllers/ReviewController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Data/MongoDbContext.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Data/Repositories/DiscussionRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Data/Repositories/ReviewRepository.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Data/ReviewSeeder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/Comment.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/CommentReply.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/DTOs/ReviewDTOs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/Discussion.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/DiscussionPost.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/Review.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Models/UserActivity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ReviewService/ReviewService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ReviewService/ReviewService.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,6 +197,61 @@
     <setting file="file://$PROJECT_DIR$/CatalogService/Validators/CreateShowtimeDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Validators/MovieFilterValidator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/CatalogService/Validators/UpdateMovieDtoValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Behaviors/LoggingBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Behaviors/PerformanceBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Behaviors/ValidationBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Discussions/AddPostCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Discussions/CreateDiscussionCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/AddCommentCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/CreateReviewCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/DeleteReviewCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/LikeReviewCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Commands/Reviews/UpdateReviewCommand.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Common/CQRSInterfaces.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/CommentDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/CommentReplyDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/DiscussionDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/DiscussionPostDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/ReviewDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/DTOs/ReviewStatisticsDto.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Mappings/ReviewMappingProfile.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetDiscussionByIdQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetMovieDiscussionsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Discussions/GetPopularDiscussionsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetMovieReviewsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetMovieStatisticsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetReviewByIdQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetTopReviewsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/GetUserReviewsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Queries/Reviews/SearchReviewsQuery.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Validators/AddCommentCommandValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Validators/CreateDiscussionCommandValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Application/Validators/CreateReviewCommandValidator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Common/BaseEntity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Common/ValueObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Entities/Discussion.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Entities/Review.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Enums/ReviewType.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Exceptions/BusinessRuleException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Exceptions/ConflictException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Exceptions/DomainException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Exceptions/NotFoundException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Exceptions/ValidationException.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Interfaces/IDiscussionRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Interfaces/IRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/Interfaces/IReviewRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/ValueObjects/MovieReference.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/ValueObjects/Rating.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/ValueObjects/ReviewContent.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Domain/ValueObjects/UserReference.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Infrastructure/Data/MongoDbContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Infrastructure/Data/MongoDbSettings.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Infrastructure/Data/Repositories/MongoDiscussionRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Infrastructure/Data/Repositories/MongoReviewRepository.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/Infrastructure/Data/Seeding/ReviewDataSeeder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/WebAPI/Controllers/DiscussionsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/WebAPI/Controllers/ReviewsController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ReviewService/WebAPI/Middleware/GlobalExceptionMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -220,7 +283,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.CatalogService: http">
+  <component name="RunManager" selected=".NET Launch Settings Profile.ReviewService: http">
     <configuration name="Bookingsservice" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -354,6 +417,7 @@
       <workItem from="1762092450531" duration="11294000" />
       <workItem from="1762199236310" duration="10082000" />
       <workItem from="1762240762851" duration="11678000" />
+      <workItem from="1763852564279" duration="602000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
