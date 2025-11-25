@@ -9,12 +9,23 @@ namespace ReviewService.Domain.ValueObjects;
 /// <summary>
 /// Value Object для контенту відгуку
 /// </summary>
-[BsonSerializer(typeof(ReviewContentBsonSerializer))]
 public class ReviewContent : ValueObject
 {
-    public string Title { get; private set; }
-    public string Content { get; private set; }
-    public bool IsSpoiler { get; private set; }
+    [BsonElement("title")]
+    public string Title { get; internal set; }
+    
+    [BsonElement("content")]
+    public string Content { get; internal set; }
+    
+    [BsonElement("isSpoiler")]
+    public bool IsSpoiler { get; internal set; }
+
+    // Parameterless constructor для BSON десеріалізації
+    private ReviewContent() 
+    { 
+        Title = string.Empty;
+        Content = string.Empty;
+    }
 
     private ReviewContent(string title, string content, bool isSpoiler)
     {
@@ -48,71 +59,5 @@ public class ReviewContent : ValueObject
         yield return Title;
         yield return Content;
         yield return IsSpoiler;
-    }
-}
-
-/// <summary>
-/// BSON Serializer для ReviewContent
-/// </summary>
-public class ReviewContentBsonSerializer : IBsonSerializer<ReviewContent>
-{
-    public Type ValueType => typeof(ReviewContent);
-
-    public ReviewContent Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
-    {
-        context.Reader.ReadStartDocument();
-        
-        string title = string.Empty;
-        string content = string.Empty;
-        bool isSpoiler = false;
-
-        while (context.Reader.State != BsonReaderState.EndOfDocument)
-        {
-            var name = context.Reader.ReadName();
-            
-            switch (name)
-            {
-                case "title":
-                    title = context.Reader.ReadString();
-                    break;
-                case "content":
-                    content = context.Reader.ReadString();
-                    break;
-                case "isSpoiler":
-                    isSpoiler = context.Reader.ReadBoolean();
-                    break;
-                default:
-                    context.Reader.SkipValue();
-                    break;
-            }
-        }
-
-        context.Reader.ReadEndDocument();
-        return ReviewContent.Create(title, content, isSpoiler);
-    }
-
-    public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, ReviewContent value)
-    {
-        context.Writer.WriteStartDocument();
-        context.Writer.WriteName("title");
-        context.Writer.WriteString(value.Title);
-        context.Writer.WriteName("content");
-        context.Writer.WriteString(value.Content);
-        context.Writer.WriteName("isSpoiler");
-        context.Writer.WriteBoolean(value.IsSpoiler);
-        context.Writer.WriteEndDocument();
-    }
-
-    object IBsonSerializer.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
-    {
-        return Deserialize(context, args);
-    }
-
-    public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, object value)
-    {
-        if (value is ReviewContent content)
-            Serialize(context, args, content);
-        else
-            throw new NotSupportedException($"Cannot serialize {value?.GetType()}");
     }
 }

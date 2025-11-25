@@ -9,11 +9,19 @@ namespace ReviewService.Domain.ValueObjects;
 /// <summary>
 /// Value Object для посилання на фільм (денормалізовані дані)
 /// </summary>
-[BsonSerializer(typeof(MovieReferenceBsonSerializer))]
 public class MovieReference : ValueObject
 {
-    public long MovieId { get; private set; }
-    public string MovieTitle { get; private set; }
+    [BsonElement("movieId")]
+    public long MovieId { get; internal set; }
+    
+    [BsonElement("movieTitle")]
+    public string MovieTitle { get; internal set; }
+
+    // Parameterless constructor для BSON десеріалізації
+    private MovieReference() 
+    { 
+        MovieTitle = string.Empty; 
+    }
 
     private MovieReference(long movieId, string movieTitle)
     {
@@ -36,65 +44,5 @@ public class MovieReference : ValueObject
     {
         yield return MovieId;
         yield return MovieTitle;
-    }
-}
-
-/// <summary>
-/// BSON Serializer для MovieReference
-/// </summary>
-public class MovieReferenceBsonSerializer : IBsonSerializer<MovieReference>
-{
-    public Type ValueType => typeof(MovieReference);
-
-    public MovieReference Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
-    {
-        context.Reader.ReadStartDocument();
-        
-        long movieId = 0;
-        string movieTitle = string.Empty;
-
-        while (context.Reader.State != BsonReaderState.EndOfDocument)
-        {
-            var name = context.Reader.ReadName();
-            
-            switch (name)
-            {
-                case "movieId":
-                    movieId = context.Reader.ReadInt64();
-                    break;
-                case "movieTitle":
-                    movieTitle = context.Reader.ReadString();
-                    break;
-                default:
-                    context.Reader.SkipValue();
-                    break;
-            }
-        }
-
-        context.Reader.ReadEndDocument();
-        return MovieReference.Create(movieId, movieTitle);
-    }
-
-    public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, MovieReference value)
-    {
-        context.Writer.WriteStartDocument();
-        context.Writer.WriteName("movieId");
-        context.Writer.WriteInt64(value.MovieId);
-        context.Writer.WriteName("movieTitle");
-        context.Writer.WriteString(value.MovieTitle);
-        context.Writer.WriteEndDocument();
-    }
-
-    object IBsonSerializer.Deserialize(BsonDeserializationContext context, BsonDeserializationArgs args)
-    {
-        return Deserialize(context, args);
-    }
-
-    public void Serialize(BsonSerializationContext context, BsonSerializationArgs args, object value)
-    {
-        if (value is MovieReference movieRef)
-            Serialize(context, args, movieRef);
-        else
-            throw new NotSupportedException($"Cannot serialize {value?.GetType()}");
     }
 }

@@ -102,8 +102,10 @@ using ReviewService.Infrastructure.Data;
 using ReviewService.Infrastructure.Data.Repositories;
 using ReviewService.Infrastructure.Data.Seeding;
 using ReviewService.WebAPI.Middleware;
+using ServiceDefaults;
+using ServiceDefaults.Middleware;
 
-var builder = WebApplication.CreateBuilder(args);
+/*var builder = WebApplication.CreateBuilder(args);
 
 var mongoSettings = builder.Configuration
     .GetSection("MongoDbSettings")
@@ -231,5 +233,163 @@ using (var scope = app.Services.CreateScope())
         throw;
     }
 }
+
+app.Run();*/
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+
+var mongoSettings = builder.Configuration
+    .GetSection("MongoDbSettings")
+    .Get<MongoDbSettings>() 
+    ?? throw new InvalidOperationException("MongoDB settings not found");
+
+//override з Aspire connection string якщо доступний
+var aspireConnectionString = builder.Configuration.GetConnectionString("ReviewDb");
+if (!string.IsNullOrEmpty(aspireConnectionString))
+{
+    mongoSettings.ConnectionString = aspireConnectionString;
+}
+
+builder.Services.AddSingleton(mongoSettings);
+
+builder.Services.AddSingleton<IMongoDatabase>(sp =>
+{
+    var settings = sp.GetRequiredService<MongoDbSettings>();
+    var context = new MongoDbContext(settings.ConnectionString, settings.DatabaseName);
+    return context.Database;
+});
+
+builder.Services.AddScoped<IReviewRepository, MongoReviewRepository>();
+builder.Services.AddScoped<IDiscussionRepository, MongoDiscussionRepository>();
+
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(
+        typeof(ReviewService.Application.Commands.Reviews.CreateReviewCommand).Assembly);
+});
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehavior<,>));
+
+builder.Services.AddValidatorsFromAssembly(
+    typeof(ReviewService.Application.Validators.CreateReviewCommandValidator).Assembly);
+
+builder.Services.AddAutoMapper(typeof(ReviewMappingProfile).Assembly);
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Cinema Review Service API",
+        Version = "v1",
+        Description = "Clean Architecture + CQRS + MediatR + MongoDB + Aspire"
+    });
+
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddHttpContextAccessor();
+
+var app = builder.Build();
+
+
+// 1. CorrelationId Middleware
+app.UseMiddleware<CorrelationIdMiddleware>();
+
+// 2. Global Exception Handler
+app.UseGlobalExceptionHandler();
+
+// 3. Swagger
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Review Service API v1");
+        options.RoutePrefix = string.Empty;
+    });
+}
+
+// 4.
+app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthorization();
+app.MapControllers();
+
+// 5. ServiceDefaults endpoints 
+app.MapDefaultEndpoints();
+
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var database = scope.ServiceProvider.GetRequiredService<IMongoDatabase>();
+        if (app.Environment.IsDevelopment())
+        {
+            app.Logger.LogWarning("Development mode: Clearing and reseeding database...");
+            await MongoDbMigration.ClearAllDataAsync(database, app.Logger);
+            
+            await ReviewDataSeeder.SeedAsync(database);
+        }
+        
+        var collections = database.ListCollectionNames().ToList();
+        
+        app.Logger.LogInformation("Successfully connected to MongoDB");
+        app.Logger.LogInformation("Found {Count} collections", collections.Count);
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "Failed to connect to MongoDB");
+        throw;
+    }
+}
+
+app.MapGet("/api/info", () => Results.Ok(new
+{
+    Service = "Cinema Review Service",
+    Version = "1.0.0",
+    Status = "Running",
+    Timestamp = DateTime.UtcNow,
+    Architecture = new
+    {
+        Pattern = "Clean Architecture",
+        CQRS = "MediatR",
+        Database = "MongoDB",
+        Validation = "FluentValidation"
+    },
+    Observability = new
+    {
+        Logging = "Serilog (Structured JSON)",
+        Tracing = "OpenTelemetry + MongoDB instrumentation",
+        CorrelationId = "Enabled"
+    }
+}));
 
 app.Run();

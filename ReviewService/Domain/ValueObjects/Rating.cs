@@ -34,7 +34,7 @@ public class Rating : ValueObject
 }
 
 /// <summary>
-/// BSON Serializer для Rating
+/// BSON Serializer для Rating (простий тип - можна залишити)
 /// </summary>
 public class RatingBsonSerializer : MongoDB.Bson.Serialization.Serializers.SerializerBase<Rating>
 {
